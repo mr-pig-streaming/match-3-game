@@ -186,11 +186,6 @@ func setup_pieces():
 		remove_setup_matches()
 	#unmatch_all()
 	#add_exclusion_zones()
-	all_pieces[3][3].queue_free()
-	all_pieces[3][3] = rotate_piece.instantiate()
-	all_pieces[3][3].position = grid_to_pixel(3, 3)
-	add_child(all_pieces[3][3])
-	move_child(all_pieces[3][3], 0)
 	total_matched = 0
 	round_matched = 0
 
