@@ -87,7 +87,6 @@ var colourblind_pieces = [
 var null_piece = preload("res://Scenes/null_piece.tscn")
 var stone_piece = preload("res://Scenes/stone_piece.tscn")
 var sand_piece = preload("res://Scenes/sand_piece.tscn")
-var glass_piece = preload("res://Scenes/glass_piece.tscn")
 var metal_piece = preload("res://Scenes/metal_piece.tscn")
 var virus_piece = preload("res://Scenes/virus_piece.tscn")
 var gold_piece = preload("res://Scenes/gold_piece.tscn")
@@ -95,7 +94,7 @@ var diamond_piece = preload("res://Scenes/diamond_piece.tscn")
 var rainbow_piece = preload("res://Scenes/rainbow_piece.tscn")
 var rotate_piece = preload("res://Scenes/rotate_piece.tscn")
 
-var special_pieces = [sand_piece, glass_piece, stone_piece, metal_piece]
+var special_pieces = [sand_piece, stone_piece, metal_piece]
 var hard_pieces = [sand_piece, stone_piece, metal_piece]
 var all_indexes = range(width * height)
 
@@ -290,28 +289,22 @@ func diagonal_match(x, y, colour):
 		return false
 	# 6 possibilites for a match
 	# bottom in a positive diagonal
-	if (x < width - 2 && y < height - 2 && (all_pieces[x + 1][y + 1].matches(colour) || all_pieces[x + 1][y + 1].colour == "Glass") && all_pieces[x + 2][y + 2].matches(colour) && colour != "Glass" && all_pieces[x + 1][y + 1].matches(all_pieces[x + 2][y + 2].colour)):
+	if (x < width - 2 && y < height - 2 && all_pieces[x + 1][y + 1].matches(colour) && all_pieces[x + 2][y + 2].matches(colour) && all_pieces[x + 1][y + 1].matches(all_pieces[x + 2][y + 2].colour)):
 		return true
 	# non-glass middle in a positive diagonal
-	if (x < width - 1 && x >= 1 && y < height - 1 && y >= 1 && all_pieces[x - 1][y - 1].matches(colour) && all_pieces[x + 1][y + 1].matches(colour)  && colour != "Glass" && all_pieces[x - 1][y - 1].matches(all_pieces[x + 1][y + 1].colour)):
-		return true
-	# glass middle in a positive diagonal
-	if (x < width - 1 && x >= 1 && y < height - 1 && y >= 1 && all_pieces[x - 1][y - 1].matches(all_pieces[x + 1][y + 1].colour) && all_pieces[x - 1][y - 1].colour != "null" && all_pieces[x - 1][y - 1].colour != "Glass" && colour == "Glass"):
+	if (x < width - 1 && x >= 1 && y < height - 1 && y >= 1 && all_pieces[x - 1][y - 1].matches(colour) && all_pieces[x + 1][y + 1].matches(colour) && all_pieces[x - 1][y - 1].matches(all_pieces[x + 1][y + 1].colour)):
 		return true
 	# top in a positive diagonal
-	if (x >= 2 && y >= 2 && (all_pieces[x - 1][y - 1].matches(colour) || all_pieces[x - 1][y - 1].colour == "Glass") && all_pieces[x - 2][y - 2].matches(colour)  && colour != "Glass" && all_pieces[x - 2][y - 2].matches(all_pieces[x - 1][y - 1].colour)):
+	if (x >= 2 && y >= 2 && all_pieces[x - 1][y - 1].matches(colour) && all_pieces[x - 2][y - 2].matches(colour) && all_pieces[x - 2][y - 2].matches(all_pieces[x - 1][y - 1].colour)):
 		return true
 	# bottom in a negative diagonal
-	if (x >= 2 && y < height - 2 && (all_pieces[x - 1][y + 1].matches(colour) || all_pieces[x - 1][y + 1].colour == "Glass") && all_pieces[x - 2][y + 2].matches(colour)  && colour != "Glass" && all_pieces[x - 2][y + 2].matches(all_pieces[x - 1][y + 1].colour)):
+	if (x >= 2 && y < height - 2 && all_pieces[x - 1][y + 1].matches(colour) && all_pieces[x - 2][y + 2].matches(colour) && all_pieces[x - 2][y + 2].matches(all_pieces[x - 1][y + 1].colour)):
 		return true
 	# non-glass middle in a negative diagonal
-	if (x < width - 1 && x >= 1 && y < height - 1 && y >= 1 && all_pieces[x - 1][y + 1].matches(colour) && all_pieces[x + 1][y - 1].matches(colour)  && colour != "Glass" && all_pieces[x - 1][y + 1].matches(all_pieces[x + 1][y - 1].colour)):
-		return true
-	# glass middle in a negative diagonal
-	if (x < width - 1 && x >= 1 && y < height - 1 && y >= 1 && all_pieces[x - 1][y + 1].matches(all_pieces[x + 1][y - 1].colour) && all_pieces[x - 1][y + 1].colour != "null" && all_pieces[x - 1][y + 1].colour != "Glass" && colour == "Glass"):
+	if (x < width - 1 && x >= 1 && y < height - 1 && y >= 1 && all_pieces[x - 1][y + 1].matches(colour) && all_pieces[x + 1][y - 1].matches(colour) && all_pieces[x - 1][y + 1].matches(all_pieces[x + 1][y - 1].colour)):
 		return true
 	# top in a negative diagonal
-	if (x < width - 2 && y >= 2 && (all_pieces[x + 1][y - 1].matches(colour) || all_pieces[x + 1][y - 1].colour == "Glass") && all_pieces[x + 2][y - 2].matches(colour)  && colour != "Glass" && all_pieces[x + 1][y - 1].matches(all_pieces[x + 2][y - 2].colour)):
+	if (x < width - 2 && y >= 2 && all_pieces[x + 1][y - 1].matches(colour) && all_pieces[x + 2][y - 2].matches(colour) && all_pieces[x + 1][y - 1].matches(all_pieces[x + 2][y - 2].colour)):
 		return true
 	return false
 
@@ -322,16 +315,13 @@ func horizontal_match(x, y, colour):
 	if (colour == null):
 		return false
 	# left block in a horizontal
-	if (x < width - 2 && (all_pieces[x + 1][y].matches(colour) || all_pieces[x + 1][y].colour == "Glass") && all_pieces[x + 2][y].matches(colour)  && colour != "Glass" && all_pieces[x + 1][y].matches(all_pieces[x + 2][y].colour)):
+	if (x < width - 2 && all_pieces[x + 1][y].matches(colour) && all_pieces[x + 2][y].matches(colour) && all_pieces[x + 1][y].matches(all_pieces[x + 2][y].colour)):
 		return true
 	# non-glass middle block in a horizontal
-	if (x < width - 1 && x >= 1 && all_pieces[x - 1][y].matches(colour) && all_pieces[x + 1][y].matches(colour) && colour != "Glass" && all_pieces[x - 1][y].matches(all_pieces[x + 1][y].colour)):
-		return true
-	# glass middle block in a horizontal
-	if (x < width - 1 && x >= 1 && all_pieces[x - 1][y].matches(all_pieces[x + 1][y].colour) && all_pieces[x - 1][y].colour != "null" && all_pieces[x - 1][y].colour != "Glass" && colour == "Glass"):
+	if (x < width - 1 && x >= 1 && all_pieces[x - 1][y].matches(colour) && all_pieces[x + 1][y].matches(colour) && all_pieces[x - 1][y].matches(all_pieces[x + 1][y].colour)):
 		return true
 	# right block in a horizontal
-	if (x >= 2 && (all_pieces[x - 1][y].matches(colour) || all_pieces[x - 1][y].colour == "Glass") && all_pieces[x - 2][y].matches(colour) && colour != "Glass" && all_pieces[x - 1][y].matches(all_pieces[x - 2][y].colour)):
+	if (x >= 2 && all_pieces[x - 1][y].matches(colour) && all_pieces[x - 2][y].matches(colour) && all_pieces[x - 1][y].matches(all_pieces[x - 2][y].colour)):
 		return true
 	return false
 
@@ -339,16 +329,13 @@ func vertical_match(x, y, colour):
 	if (colour == null):
 		return false
 	# bottom block in a vertical
-	if (y < height - 2 && (all_pieces[x][y + 1].matches(colour) || all_pieces[x][y + 1].colour == "Glass") && all_pieces[x][y + 2].matches(colour) && colour != "Glass" && all_pieces[x][y + 1].matches(all_pieces[x][y + 2].colour)):
+	if (y < height - 2 && all_pieces[x][y + 1].matches(colour) && all_pieces[x][y + 2].matches(colour) && all_pieces[x][y + 1].matches(all_pieces[x][y + 2].colour)):
 		return true
 	# non-glass middle block in a vertical
-	if (y < height - 1 && y >= 1 && all_pieces[x][y - 1].matches(colour) && all_pieces[x][y + 1].matches(colour) && colour != "Glass" && all_pieces[x][y - 1].matches(all_pieces[x][y + 1].colour)):
-		return true
-	# glass middle block in a vertical
-	if (y < height - 1 && y >= 1 && all_pieces[x][y - 1].matches(all_pieces[x][y + 1].colour) && all_pieces[x][y - 1].colour != "null" && all_pieces[x][y - 1].colour != "Glass" && colour == "Glass"):
+	if (y < height - 1 && y >= 1 && all_pieces[x][y - 1].matches(colour) && all_pieces[x][y + 1].matches(colour) && all_pieces[x][y - 1].matches(all_pieces[x][y + 1].colour)):
 		return true
 	# top block in a vertical
-	if (y >= 2 && (all_pieces[x][y - 1].matches(colour) || all_pieces[x][y - 1].colour == "Glass") && all_pieces[x][y - 2].matches(colour) && colour != "Glass" && all_pieces[x][y - 2].matches(all_pieces[x][y - 1].colour)):
+	if (y >= 2 && all_pieces[x][y - 1].matches(colour) && all_pieces[x][y - 2].matches(colour) && all_pieces[x][y - 2].matches(all_pieces[x][y - 1].colour)):
 		return true
 	return false
 
@@ -534,8 +521,6 @@ func _input(event):
 			if (in_grid(first_touch) && in_grid(final_touch)):
 				if (all_pieces[first_touch.x][first_touch.y].colour != "Stone" && 
 					all_pieces[final_touch.x][final_touch.y].colour != "Stone" &&
-					all_pieces[first_touch.x][first_touch.y].colour != "Glass" && 
-					all_pieces[final_touch.x][final_touch.y].colour != "Glass" &&
 					all_pieces[first_touch.x][first_touch.y].colour != "Virus" && 
 					all_pieces[final_touch.x][final_touch.y].colour != "Virus"):
 					moved = true
@@ -627,9 +612,6 @@ func refill_board():
 					all_pieces[i][j].queue_free()
 					var index = randi_range(0, range_specials - 1)
 					var piece: Piece = special_pieces[index].instantiate()
-					if (piece.colour == "Glass"):
-						if (match_at(i, j, "Glass")):
-							piece = special_pieces[0].instantiate()
 					all_pieces[i][j] = piece
 					squares_to_drop.append(Vector2(i, j))
 					add_child(piece)
@@ -846,9 +828,6 @@ func set_level(level, challenge = false):
 			all_pieces[row][col].queue_free()
 			var index = randi_range(0, range_specials - 1)
 			var piece: Piece = special_pieces[index].instantiate()
-			if (piece.colour == "Glass"):
-				if (match_at(row, col, "Glass")):
-					piece = special_pieces[0].instantiate()
 			all_pieces[row][col] = piece
 			add_child(piece)
 			move_child(piece, 0)
