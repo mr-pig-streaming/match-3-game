@@ -30,6 +30,12 @@ func _ready():
 		cards.append(null)
 	setup_card_slots()
 	print("Unlocked: " + str(get_parent().get_parent().get_node("Globals").sideboard_unlocked))
+	var helper = preload("res://Scenes/clippy_helper.tscn").instantiate()
+	helper.scale *= 0.75
+	add_child(helper)
+	move_child(helper, -1)
+	helper.name = "Helper"
+	helper.position = Vector2(848, 676)
 	if (get_parent().get_parent().get_node("Globals").sideboard_unlocked):
 		active = true
 		get_node("PanelSprite").visible = false
@@ -37,11 +43,6 @@ func _ready():
 		active = false
 		get_node("PanelSprite").visible = true
 		move_child(get_node("PanelSprite"), -1)
-	var helper = preload("res://Scenes/clippy_helper.tscn").instantiate()
-	add_child(helper)
-	move_child(helper, -1)
-	helper.name = "Helper"
-	helper.position = Vector2(704, 660)
 
 func setup_card_slots():
 	card_slots = []
