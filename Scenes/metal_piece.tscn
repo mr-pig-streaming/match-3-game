@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://bppao8n5khjk7"]
+
+[ext_resource type="PackedScene" uid="uid://ri1h4edtirlb" path="res://Scenes/stone_piece.tscn" id="1_m7axv"]
+[ext_resource type="Texture2D" uid="uid://cxp0auf83qp3l" path="res://Art/metal.jpg" id="2_bgihq"]
+[ext_resource type="Script" path="res://Scripts/metal_piece.gd" id="2_xruxl"]
+
+[node name="Metal_Piece" instance=ExtResource("1_m7axv")]
+script = ExtResource("2_xruxl")
+base_durability = 3
+durability = 3
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_bgihq")

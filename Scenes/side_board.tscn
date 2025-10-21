@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://bt3o7e3sy2ltu"]
+
+[ext_resource type="Script" path="res://Scripts/SideBoard.gd" id="1_r5qj3"]
+[ext_resource type="Texture2D" uid="uid://dpq8fbhh5hka7" path="res://Art/maintenance_panel.png" id="2_ao2gv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g77gm"]
+size = Vector2(160, 720)
+
+[node name="SideBoard" type="Node2D"]
+script = ExtResource("1_r5qj3")
+
+[node name="ChipArea" type="Area2D" parent="."]
+position = Vector2(640, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChipArea"]
+position = Vector2(80, 360)
+shape = SubResource("RectangleShape2D_g77gm")
+
+[node name="DispenserButton" type="Button" parent="."]
+offset_left = 984.0
+offset_top = 18.0
+offset_right = 1102.0
+offset_bottom = 49.0
+text = "Dispense Chip"
+
+[node name="ViewButton" type="Button" parent="."]
+offset_left = 1142.0
+offset_top = 18.0
+offset_right = 1234.0
+offset_bottom = 49.0
+text = "View Chips"
+
+[node name="PanelSprite" type="Sprite2D" parent="."]
+position = Vector2(960, 360)
+texture = ExtResource("2_ao2gv")
+
+[connection signal="input_event" from="ChipArea" to="." method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="ChipArea" to="." method="_on_chip_area_mouse_entered"]
+[connection signal="mouse_exited" from="ChipArea" to="." method="_on_chip_area_mouse_exited"]
+[connection signal="pressed" from="DispenserButton" to="." method="_on_dispenser_button_pressed"]
+[connection signal="pressed" from="ViewButton" to="." method="_on_view_button_pressed"]

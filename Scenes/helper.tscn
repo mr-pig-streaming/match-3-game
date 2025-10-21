@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjo645k1s7c12"]
+
+[ext_resource type="Texture2D" uid="uid://btb8x8dxxxun4" path="res://Art/tv.png" id="1_nt4nq"]
+[ext_resource type="Script" path="res://Scripts/helper.gd" id="1_yfhen"]
+[ext_resource type="Texture2D" uid="uid://bjfi7g1rbbkoa" path="res://Art/text_screen.jpg" id="2_3q4jr"]
+
+[node name="Helper" type="Node2D"]
+position = Vector2(64, 64)
+script = ExtResource("1_yfhen")
+
+[node name="TVSprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_nt4nq")
+
+[node name="HelperSprite" type="Sprite2D" parent="."]
+
+[node name="TextBoxSprite" type="Sprite2D" parent="."]
+position = Vector2(320, 0)
+texture = ExtResource("2_3q4jr")
+
+[node name="OutputLabel" type="RichTextLabel" parent="."]
+offset_left = 85.0
+offset_top = -50.0
+offset_right = 556.0
+offset_bottom = 53.0
+bbcode_enabled = true
+metadata/_edit_use_anchors_ = true

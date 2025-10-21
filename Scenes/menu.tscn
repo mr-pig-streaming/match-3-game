@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://clpnlj0ywnvju"]
+
+[node name="Menu" type="Node2D"]
+
+[node name="New Game" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "New Game"
+
+[node name="QuitGameButton" type="Button" parent="."]
+offset_top = 101.0
+offset_right = 42.0
+offset_bottom = 132.0
+text = "Quit"
+
+[node name="LoadGameButton" type="Button" parent="."]
+offset_top = 51.0
+offset_right = 96.0
+offset_bottom = 82.0
+text = "Load Game"

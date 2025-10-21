@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://c256pq7xrpa0l"]
+
+[ext_resource type="Script" path="res://Scripts/grid.gd" id="1_m0tp3"]
+
+[node name="Grid" type="Node2D"]
+script = ExtResource("1_m0tp3")
+
+[node name="Collapse_Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="Clear_Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="Refill_Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="Collapse_Timer" to="." method="_on_collapse_timer_timeout"]
+[connection signal="timeout" from="Clear_Timer" to="." method="_on_clear_timer_timeout"]
+[connection signal="timeout" from="Refill_Timer" to="." method="_on_refill_timer_timeout"]

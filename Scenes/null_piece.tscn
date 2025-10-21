@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ef0f6jsn0nng"]
+
+[ext_resource type="PackedScene" uid="uid://bepdx77askp6h" path="res://Scenes/piece.tscn" id="1_aylrx"]
+
+[node name="Null_Piece" instance=ExtResource("1_aylrx")]
+colour = "null"

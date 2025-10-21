@@ -1,0 +1,42 @@
+[gd_scene load_steps=11 format=3 uid="uid://cvrlm64rqh7cu"]
+
+[ext_resource type="Script" path="res://Scripts/audio_manager.gd" id="1_paim3"]
+[ext_resource type="AudioStream" uid="uid://dhixiifsvkbkl" path="res://Sound/click.wav" id="2_jlxoc"]
+[ext_resource type="AudioStream" uid="uid://bynnjupw1im1v" path="res://Sound/music.mp3" id="3_apksa"]
+[ext_resource type="AudioStream" uid="uid://ctpvd2ih6u3c8" path="res://Sound/black_market.wav" id="4_ex80p"]
+[ext_resource type="AudioStream" uid="uid://ch4y5yannfkvl" path="res://Sound/menu_music.ogg" id="5_oymga"]
+[ext_resource type="AudioStream" uid="uid://l7mbmea1yki" path="res://Sound/swish.wav" id="6_p0ym7"]
+[ext_resource type="AudioStream" uid="uid://csfstdqbbg5xp" path="res://Sound/match.wav" id="7_888ch"]
+[ext_resource type="AudioStream" uid="uid://61pkhjyvgs2g" path="res://Sound/power_up.wav" id="8_aajhn"]
+[ext_resource type="AudioStream" uid="uid://bo0rw1obwbk8r" path="res://Sound/power_down.wav" id="9_hru74"]
+[ext_resource type="AudioStream" uid="uid://bv6xw7kig20ib" path="res://Sound/crack.wav" id="10_ws3a8"]
+
+[node name="AudioManager" type="Node2D"]
+script = ExtResource("1_paim3")
+
+[node name="ClickPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_jlxoc")
+
+[node name="PuzzleMusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_apksa")
+
+[node name="BlackMarketMusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ex80p")
+
+[node name="MenuMusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_oymga")
+
+[node name="SwishPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_p0ym7")
+
+[node name="MatchPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_888ch")
+
+[node name="PowerUpPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_aajhn")
+
+[node name="PowerDownPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_hru74")
+
+[node name="CrackPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_ws3a8")

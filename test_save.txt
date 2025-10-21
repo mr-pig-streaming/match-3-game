@@ -1,0 +1,12 @@
+IN_RUN
+[null,null,null,null,null,null,null,null,null]
+["EMPTY","LOCKED","LOCKED","LOCKED","LOCKED"]
+[]
+18,25,14,31430,15,10000000,2
+["Puzzle","Challenge"]
+[]
+25,1
+[["Unlock Slot 2",20,false,false],["Unlock Slot 3",30,false,false],["Unlock Slot 4",40,false,false],["Unlock Slot 5",50,false,false]]
+[["Battery Pack",30,false,false],["Super Battery",50,false,false],["Supercharger",70,false,false],["Megavolt Cell",90,false,false]]
+[["Starting Chip: Shuffle",10,false,false],["Starting Chip: Bishop",20,false,false],["Starting Chip: Antivirus",30,false,false],["Starting Chip: Crack Blocks",40,false,false]]
+false

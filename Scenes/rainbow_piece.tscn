@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmyei887n4s6c"]
+
+[ext_resource type="PackedScene" uid="uid://bepdx77askp6h" path="res://Scenes/piece.tscn" id="1_1lu2b"]
+[ext_resource type="Script" path="res://Scripts/rainbow_piece.gd" id="2_21js3"]
+[ext_resource type="Texture2D" uid="uid://b6mvxmql7q010" path="res://Art/rainbow.png" id="2_jptjw"]
+
+[node name="RainbowPiece" instance=ExtResource("1_1lu2b")]
+script = ExtResource("2_21js3")
+colour = "redorangeyellowgreenbluepurple"
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_jptjw")

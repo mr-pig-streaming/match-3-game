@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2xywwjinh2q1"]
+
+[ext_resource type="Texture2D" uid="uid://bi41tvkbl5n45" path="res://Art/Exclusion.png" id="1_ncilm"]
+
+[node name="ExclusionZone" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ncilm")

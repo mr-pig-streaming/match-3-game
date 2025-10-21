@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://ri1h4edtirlb"]
+
+[ext_resource type="PackedScene" uid="uid://bepdx77askp6h" path="res://Scenes/piece.tscn" id="1_gye6w"]
+[ext_resource type="Texture2D" uid="uid://wqvrn0cas3qp" path="res://Art/Stone.png" id="2_2l0sy"]
+[ext_resource type="Script" path="res://Scripts/stone_piece.gd" id="2_oadk1"]
+[ext_resource type="Texture2D" uid="uid://cufbd2k5ot3nx" path="res://Art/Shield.png" id="5_ufpso"]
+
+[node name="Stone_Piece" instance=ExtResource("1_gye6w")]
+script = ExtResource("2_oadk1")
+broken = false
+effect = "NONE"
+base_durability = 2
+colour = "Stone"
+durability = 2
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_2l0sy")
+
+[node name="Crack_Timer" type="Timer" parent="." index="1"]
+wait_time = 0.5
+one_shot = true
+
+[node name="HardenTimer" type="Timer" parent="." index="2"]
+wait_time = 0.5
+one_shot = true
+
+[node name="Shield" type="Sprite2D" parent="." index="3"]
+visible = false
+texture = ExtResource("5_ufpso")
+
+[connection signal="timeout" from="Crack_Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="HardenTimer" to="." method="_on_harden_timer_timeout"]

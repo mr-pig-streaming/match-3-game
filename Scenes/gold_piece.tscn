@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://dfeqkxd4e047o"]
+
+[ext_resource type="PackedScene" uid="uid://ri1h4edtirlb" path="res://Scenes/stone_piece.tscn" id="1_6lj3l"]
+[ext_resource type="Script" path="res://Scripts/gold_piece.gd" id="2_fwlrb"]
+[ext_resource type="Texture2D" uid="uid://dnexiwk2ofwxc" path="res://Art/Gold.png" id="3_qkh4r"]
+
+[node name="Gold_Piece" instance=ExtResource("1_6lj3l")]
+script = ExtResource("2_fwlrb")
+effect = "GOLD"
+base_durability = 4
+durability = 4
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("3_qkh4r")

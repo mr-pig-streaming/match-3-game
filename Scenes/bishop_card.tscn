@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1m0rm28u8fsh"]
+
+[ext_resource type="PackedScene" uid="uid://dlvje4a8uuoqy" path="res://Scenes/card.tscn" id="1_1ip6n"]
+[ext_resource type="Texture2D" uid="uid://cmwpxotd6jnia" path="res://Art/LightBishop.png" id="2_o6q18"]
+
+[node name="Bishop_Card" instance=ExtResource("1_1ip6n")]
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_o6q18")

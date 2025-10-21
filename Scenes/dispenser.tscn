@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://djqpa8tfrjtpe"]
+
+[ext_resource type="Texture2D" uid="uid://53oaowa0tnt1" path="res://Art/pop_up.png" id="1_55iep"]
+
+[node name="Dispenser" type="Node2D"]
+
+[node name="Popup" type="Sprite2D" parent="."]
+texture = ExtResource("1_55iep")
+
+[node name="CloseButton" type="Button" parent="."]
+offset_left = 250.0
+offset_top = 190.0
+offset_right = 300.0
+offset_bottom = 221.0
+text = "Close"
+
+[node name="ChipsLabel" type="RichTextLabel" parent="."]
+offset_left = -304.0
+offset_top = -220.0
+offset_right = 302.0
+offset_bottom = 180.0
+bbcode_enabled = true
+text = "[color=black]Chips in Dispenser:
+
+"
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false

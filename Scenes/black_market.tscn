@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4stihbs5cu5j"]
+
+[ext_resource type="Script" path="res://Scripts/black_market.gd" id="1_jo4he"]
+
+[node name="BlackMarket" type="Node2D"]
+script = ExtResource("1_jo4he")
+
+[node name="BlackMarketLabel" type="Label" parent="."]
+offset_left = 600.0
+offset_top = 50.0
+offset_right = 753.0
+offset_bottom = 73.0
+text = "THE BLACK MARKET"
+
+[node name="NewRunButton" type="Button" parent="."]
+offset_left = 550.0
+offset_top = 650.0
+offset_right = 773.0
+offset_bottom = 681.0
+text = "Once more into the mines..."
+
+[node name="DiamondsLabel" type="Label" parent="."]
+offset_left = 100.0
+offset_top = 50.0
+offset_right = 197.0
+offset_bottom = 73.0
+text = "Shards: 0"

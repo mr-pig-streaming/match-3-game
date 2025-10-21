@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3 uid="uid://cw5p0wcudt2a3"]
+
+[ext_resource type="PackedScene" uid="uid://bepdx77askp6h" path="res://Scenes/piece.tscn" id="1_q8n4l"]
+[ext_resource type="Script" path="res://Scripts/glass_piece.gd" id="2_sdra6"]
+[ext_resource type="Texture2D" uid="uid://fml6qnsugwvg" path="res://Art/glass.png" id="2_ymicd"]
+
+[node name="GlassPiece" instance=ExtResource("1_q8n4l")]
+script = ExtResource("2_sdra6")
+colour = "Glass"
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_ymicd")

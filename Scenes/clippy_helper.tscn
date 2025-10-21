@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccvnbyi32se8y"]
+
+[ext_resource type="PackedScene" uid="uid://cjo645k1s7c12" path="res://Scenes/helper.tscn" id="1_gxdqe"]
+[ext_resource type="Script" path="res://Scripts/clippy_helper.gd" id="2_40er4"]
+[ext_resource type="Texture2D" uid="uid://boq5vxmsxhvbm" path="res://Art/Clippy_trans.png" id="2_cipxh"]
+
+[node name="ClippyHelper" instance=ExtResource("1_gxdqe")]
+script = ExtResource("2_40er4")
+
+[node name="HelperSprite" parent="." index="1"]
+texture = ExtResource("2_cipxh")

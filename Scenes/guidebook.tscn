@@ -1,0 +1,207 @@
+[gd_scene load_steps=14 format=3 uid="uid://cxuux4t43ecfw"]
+
+[ext_resource type="Texture2D" uid="uid://ccuk2600u2040" path="res://Art/Guidebook04.png" id="1_64rgo"]
+[ext_resource type="Script" path="res://Scripts/guidebook.gd" id="1_mrhao"]
+[ext_resource type="Texture2D" uid="uid://d1fmfh8v2pu32" path="res://Art/Guidebook03.png" id="2_vf8sw"]
+[ext_resource type="Texture2D" uid="uid://cltkmr7lwsowf" path="res://Art/Guidebook02.png" id="3_ss3bg"]
+[ext_resource type="Texture2D" uid="uid://4u3onsaxyklh" path="res://Art/Guidebook01.png" id="4_dm6b4"]
+[ext_resource type="Texture2D" uid="uid://fml6qnsugwvg" path="res://Art/glass.png" id="5_pe0ua"]
+[ext_resource type="Texture2D" uid="uid://dwg8o1eqaxbsp" path="res://Art/Sand.png" id="6_f1ay6"]
+[ext_resource type="Texture2D" uid="uid://wqvrn0cas3qp" path="res://Art/Stone.png" id="7_u3tfj"]
+[ext_resource type="Texture2D" uid="uid://cxp0auf83qp3l" path="res://Art/metal.jpg" id="8_hoxhj"]
+[ext_resource type="Texture2D" uid="uid://driod6tgt1g07" path="res://Art/Green_Virus.png" id="9_rfg7f"]
+[ext_resource type="Texture2D" uid="uid://dnexiwk2ofwxc" path="res://Art/Gold.png" id="10_jr7wb"]
+[ext_resource type="Texture2D" uid="uid://8lda7wlwqcrb" path="res://Art/Diamond.png" id="11_m2hsk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y741u"]
+size = Vector2(234, 45)
+
+[node name="Guidebook" type="Node2D"]
+script = ExtResource("1_mrhao")
+
+[node name="Page4" type="Node2D" parent="."]
+
+[node name="Page4Sprite" type="Sprite2D" parent="Page4"]
+texture = ExtResource("1_64rgo")
+
+[node name="TabLabel" type="RichTextLabel" parent="Page4"]
+offset_left = 329.0
+offset_top = -256.0
+offset_right = 398.0
+offset_bottom = -216.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[b][color=black]Viruses[/color][/b]"
+
+[node name="Tab4" type="Area2D" parent="Page4"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Page4/Tab4"]
+position = Vector2(360, -244.5)
+shape = SubResource("RectangleShape2D_y741u")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Page4"]
+offset_left = -453.0
+offset_top = -195.0
+offset_right = 456.0
+offset_bottom = 238.0
+bbcode_enabled = true
+text = "[color=black]Three's a Crowd: A maximum of 3 blocks can be matched each turn
+Half: Receive half score
+Harden Blocks: All blocks are healed of 1 damage. If undamaged, they receive a 1 damage shield
+Stone Prism: Spawns several random hard blocks
+
+Viruses can be removed at rest areas, or by using the Antivirus microchip[/color]"
+
+[node name="Page3" type="Node2D" parent="."]
+
+[node name="Page3Sprite" type="Sprite2D" parent="Page3"]
+texture = ExtResource("2_vf8sw")
+
+[node name="TabLabel" type="RichTextLabel" parent="Page3"]
+offset_left = 75.0
+offset_top = -256.0
+offset_right = 194.0
+offset_bottom = -216.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[b][color=black]Microchips[/color][/b]"
+
+[node name="Tab3" type="Area2D" parent="Page3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Page3/Tab3"]
+position = Vector2(120, -244.5)
+shape = SubResource("RectangleShape2D_y741u")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Page3"]
+offset_left = -456.0
+offset_top = -190.0
+offset_right = 458.0
+offset_bottom = 240.0
+bbcode_enabled = true
+text = "[color=black]Bishop: Matches blocks diagonally instead of straight lines
+Tetris: Matches block in tetrominos instead of straight lines
+Queen: Matches blocks both straight and diagonally
+Double: Doubles score for 3 rounds
+Time Stop: Prevents energy going down, and halts matches, for 3 turns to allow for larger matches
+Crack Blocks: Does 1 damage to all hard blocks. Also breaks virus bombs
+Colourblind: Allows green and red blocks to be matched
+Antivirus: Clears all virus bombs
+Quantum Translocator: Blocks can be moved anywhere for 4 turns[/color]"
+
+[node name="Page2" type="Node2D" parent="."]
+
+[node name="Page2Sprite" type="Sprite2D" parent="Page2"]
+texture = ExtResource("3_ss3bg")
+
+[node name="TabLabel" type="RichTextLabel" parent="Page2"]
+offset_left = -179.0
+offset_top = -256.0
+offset_right = -60.0
+offset_bottom = -216.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[b][color=black]Special Blocks[/color][/b]"
+
+[node name="Glass" type="Sprite2D" parent="Page2"]
+position = Vector2(-255, -154)
+texture = ExtResource("5_pe0ua")
+
+[node name="Sand" type="Sprite2D" parent="Page2"]
+position = Vector2(-411, -60)
+texture = ExtResource("6_f1ay6")
+
+[node name="Stone" type="Sprite2D" parent="Page2"]
+position = Vector2(-336, -60)
+texture = ExtResource("7_u3tfj")
+
+[node name="Metal" type="Sprite2D" parent="Page2"]
+position = Vector2(-259, -61)
+texture = ExtResource("8_hoxhj")
+
+[node name="GreenVirus" type="Sprite2D" parent="Page2"]
+position = Vector2(-260, 32)
+texture = ExtResource("9_rfg7f")
+
+[node name="Gold" type="Sprite2D" parent="Page2"]
+position = Vector2(-261, 115)
+texture = ExtResource("10_jr7wb")
+
+[node name="Diamond" type="Sprite2D" parent="Page2"]
+position = Vector2(-264, 199)
+texture = ExtResource("11_m2hsk")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Page2"]
+offset_left = -207.0
+offset_top = -164.0
+offset_right = 459.0
+offset_bottom = 235.0
+bbcode_enabled = true
+text = "[color=black]Glass Block: Only matched if the blocks on either side are the same colour
+
+
+Hard Blocks: Cannot be directly moved or matched, but matching a nearby block will damage them. Some need to be damaged more than once
+
+
+
+Virus Bomb: Counts downm, and activates a virus when the timer runs out
+
+
+Gold Block: Incredibly hard block, which gives a large score bonus when broken
+
+
+
+Diamond Block: Incredibly hard block, which gives many shards when broken[/color]"
+
+[node name="Tab2" type="Area2D" parent="Page2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Page2/Tab2"]
+position = Vector2(-120, -244.5)
+shape = SubResource("RectangleShape2D_y741u")
+
+[node name="Page1" type="Node2D" parent="."]
+
+[node name="Page1Sprite" type="Sprite2D" parent="Page1"]
+texture = ExtResource("4_dm6b4")
+
+[node name="TabLabel" type="RichTextLabel" parent="Page1"]
+offset_left = -399.0
+offset_top = -256.0
+offset_right = -312.0
+offset_bottom = -216.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[b][color=black]The Basics[/color][/b]"
+
+[node name="Tab1" type="Area2D" parent="Page1"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Page1/Tab1"]
+position = Vector2(-360, -244.5)
+shape = SubResource("RectangleShape2D_y741u")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Page1"]
+offset_left = -460.0
+offset_top = -205.0
+offset_right = 458.0
+offset_bottom = 244.0
+bbcode_enabled = true
+text = "[color=black]Welcome to the GalactiCorp™ Mundanium Mines!
+
+As a valued employee, you have been provided with a state-of-the-art quantum translocator mining vessel, the QTπ. Mundanium is valuable mineral, appearing in 6 different isotopes. Your mining vessel is able to rearrange Mundanium isotopes over a short distance in order to improve mining effeciency. Mining veins of 1 or 2 isotops is inefficient, and will not be attempted to avoid loss of company resources.
+
+You job will be to rearrange Mundanium-rich ores into efficient mining patterns. Bonuses are available to highly efficient individuals, who will quickly climb the ranks. Once your debt is paid off, you endenture will end and you may be offered one of our highly favourable permanent employee positions. These come with incredible perks such as two (2) paid days off per year, as well as wages in line with galactic standard minimum wage.
+
+During mining, some employees report finding reports of highly valuable Mundanium shards during mining. Please note that collecting and trading such shards is against company policy and will no be tolerated if identified. Illegal modifications to the GalactiCorp™ QTπ is also not allowed. If discovered, the cost of repairs will be added to your debt.
+
+(Match 3 or more squares of the same colour to make them disappear)[/color]"
+
+[node name="CloseButton" type="Button" parent="."]
+offset_left = 407.0
+offset_top = 222.0
+offset_right = 457.0
+offset_bottom = 253.0
+text = "Close"
+
+[connection signal="input_event" from="Page4/Tab4" to="." method="_on_tab_4_input_event"]
+[connection signal="input_event" from="Page3/Tab3" to="." method="_on_tab_3_input_event"]
+[connection signal="input_event" from="Page2/Tab2" to="." method="_on_tab_2_input_event"]
+[connection signal="input_event" from="Page1/Tab1" to="." method="_on_tab_1_input_event"]

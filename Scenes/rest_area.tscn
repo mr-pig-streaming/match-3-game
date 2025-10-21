@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://dy4nhn1khkese"]
+
+[ext_resource type="Script" path="res://Scripts/rest_area.gd" id="1_ihrnh"]
+[ext_resource type="AudioStream" uid="uid://dhixiifsvkbkl" path="res://Sound/click.wav" id="2_0wdng"]
+
+[node name="RestArea" type="Node2D"]
+script = ExtResource("1_ihrnh")
+
+[node name="RechargeButton" type="Button" parent="."]
+offset_left = 200.0
+offset_top = 100.0
+offset_right = 280.0
+offset_bottom = 131.0
+text = "Recharge: +5 Turns"
+
+[node name="DebugButton" type="Button" parent="."]
+offset_left = 200.0
+offset_top = 200.0
+offset_right = 258.0
+offset_bottom = 231.0
+text = "Debug (Future Work)"
+
+[node name="LeaveButton" type="Button" parent="."]
+offset_left = 200.0
+offset_top = 300.0
+offset_right = 253.0
+offset_bottom = 331.0
+text = "Leave"
+
+[node name="ClickPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_0wdng")
+
+[connection signal="pressed" from="RechargeButton" to="." method="_on_recharge_button_pressed"]
+[connection signal="pressed" from="DebugButton" to="." method="_on_debug_button_pressed"]
+[connection signal="pressed" from="LeaveButton" to="." method="_on_leave_button_pressed"]

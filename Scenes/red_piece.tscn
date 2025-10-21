@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3 uid="uid://bhol2y7onml5w"]
+
+[ext_resource type="PackedScene" uid="uid://bepdx77askp6h" path="res://Scenes/piece.tscn" id="1_vy72p"]
+[ext_resource type="Script" path="res://Scripts/red_piece.gd" id="2_lbpts"]
+[ext_resource type="Texture2D" uid="uid://ddrsbe2h7rhjs" path="res://Art/Red.png" id="2_twnsx"]
+
+[node name="RedPiece" instance=ExtResource("1_vy72p")]
+script = ExtResource("2_lbpts")
+colour = "red"
+
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_twnsx")
