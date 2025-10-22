@@ -57,7 +57,7 @@ var sideboard_unlocked = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	max_turns = 25
+	max_turns = 15
 	num_card_slots = 1
 	print("Max turns: " + str(max_turns))
 	starting_deck = []
