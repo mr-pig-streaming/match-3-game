@@ -114,20 +114,18 @@ func end_game(game_state):
 		tween.tween_property(get_node("ShutterSprite"),"position", Vector2(640, 360), 0.3).set_ease(Tween.EASE_OUT)
 		tween.play()
 		await get_tree().create_timer(1.5).timeout
-		
 		get_node("/root/BaseScene/AudioManager").end_puzzle_music()
-		var diamonds = get_node("gameboard").diamonds
-		get_node("gameboard").queue_free()
-		# Go to the black market between runs
-		var market: BlackMarket = preload("res://Scenes/black_market.tscn").instantiate()
-		market.set_num_diamonds(diamonds)
-		add_child(market)
-		get_node("/root/BaseScene/AudioManager").play_market_music()
-		market.get_node("NewRunButton").pressed.connect(new_run)
 		
-		var tween2: Tween = create_tween()
-		tween2.tween_property(get_node("ShutterSprite"),"position", Vector2(640, -640), 0.3).set_ease(Tween.EASE_OUT)
-		tween2.play()
+		# Show the status screen
+		var status_screen = preload("res://Scenes/status_screen.tscn").instantiate()
+		status_screen.name = "status_screen"
+		add_child(status_screen)
+		status_screen.set_label_text(get_node("gameboard").score)
+		status_screen.position = Vector2(640, 360)
+		move_child(status_screen, 0)
+		status_screen.z_index = 6
+		status_screen.get_node("CloseButton").pressed.connect(start_black_market)
+		
 	if (game_state == "WIN"):
 		var tween: Tween = create_tween()
 		tween.tween_property(get_node("ShutterSprite"),"position", Vector2(640, 360), 0.3).set_ease(Tween.EASE_OUT)
@@ -144,6 +142,21 @@ func end_game(game_state):
 		var tween2: Tween = create_tween()
 		tween2.tween_property(get_node("ShutterSprite"),"position", Vector2(640, -640), 0.3).set_ease(Tween.EASE_OUT)
 		tween2.play()
+
+func start_black_market():
+	remove_child(get_node("status_screen"))
+	var diamonds = get_node("gameboard").diamonds
+	get_node("gameboard").queue_free()
+	# Go to the black market between runs
+	var market: BlackMarket = preload("res://Scenes/black_market.tscn").instantiate()
+	market.set_num_diamonds(diamonds)
+	add_child(market)
+	get_node("/root/BaseScene/AudioManager").play_market_music()
+	market.get_node("NewRunButton").pressed.connect(new_run)
+	
+	var tween2: Tween = create_tween()
+	tween2.tween_property(get_node("ShutterSprite"),"position", Vector2(640, -640), 0.3).set_ease(Tween.EASE_OUT)
+	tween2.play()
 
 func new_run():
 	get_node("AudioManager").play_click()
