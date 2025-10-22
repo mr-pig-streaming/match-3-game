@@ -11,7 +11,7 @@ func _process(delta):
 	pass
 
 func crack_piece():
-	if (durability >= base_durability):
+	if (durability >= 1):
 		get_node("Crack_Timer").start()
 	if (durability == 0):
 		broken = true
