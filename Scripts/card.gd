@@ -54,7 +54,7 @@ func _input(event):
 			position = get_global_mouse_position() + mouse_offset
 
 func _on_area_2d_input_event(viewport, event, shape_idx):
-	if event is InputEventMouseButton:
+	if event is InputEventMouseButton and !card_active:
 		if event.is_pressed():
 			card_held = true
 			get_parent().set_held_card(self)
