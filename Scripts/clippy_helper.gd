@@ -1,9 +1,9 @@
 extends "res://Scripts/helper.gd"
 
 var lines = [
-	"Hi! I'm Clippy, your helpful corporate assistant! Ask me anything!",
+	"Hi! I'm Chippy, your helpful corporate assistant! Ask me anything!",
 	"Feel free to make suggestions! We'll feel free to ignore you and reconsider your employment",
-	"Did you know that most employees finish their endenture after only 1472.6 years? Good luck!"
+	"Did you know that most employees finish their indenture after only 1472.6 years? Good luck!"
 ]
 
 var active_lines = []

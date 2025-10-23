@@ -23,7 +23,7 @@ func status_from_score(score):
 	status_string += "Convenience Fee: $%.2f\n" % (score * 0.14)
 	status_string += "Service Convenience Fee: $%.2f\n" % (score * 0.16)
 	status_string += "Total Fees: $%.2f\n" % score
-	status_string += "Outstanding Endenture: $%.2f\n" % goal_score
+	status_string += "Outstanding Indenture: $%.2f\n" % goal_score
 	status_string += "\n"
 	status_string += "Thank you for working with GalactiCorp!"
 	return status_string

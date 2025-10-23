@@ -45,12 +45,12 @@ offset_top = -195.0
 offset_right = 456.0
 offset_bottom = 238.0
 bbcode_enabled = true
-text = "[color=black]Three's a Crowd: A maximum of 3 blocks can be matched each turn
-Half: Receive half score
-Harden Blocks: All blocks are healed of 1 damage. If undamaged, they receive a 1 damage shield
-Stone Prism: Spawns several random hard blocks
+text = "[color=black]Three's a Crowd: A maximum of 3 blocks can be matched each turn.
+Half: Receive half score.
+Harden Blocks: All blocks are healed of 1 damage. If undamaged, they receive a 1 damage shield.
+Stone Prism: Spawns several random hard blocks.
 
-Viruses can be removed at rest areas, or by using the Antivirus microchip[/color]"
+Viruses can be removed at rest areas, or by using the Antivirus microchip.[/color]"
 
 [node name="Page3" type="Node2D" parent="."]
 
@@ -78,15 +78,15 @@ offset_top = -190.0
 offset_right = 458.0
 offset_bottom = 240.0
 bbcode_enabled = true
-text = "[color=black]Bishop: Matches blocks diagonally instead of straight lines
-Tetris: Matches block in tetrominos instead of straight lines
-Queen: Matches blocks both straight and diagonally
-Double: Doubles score for 3 rounds
-Time Stop: Prevents energy going down, and halts matches, for 3 turns to allow for larger matches
-Crack Blocks: Does 1 damage to all hard blocks. Also breaks virus bombs
-Colourblind: Allows green and red blocks to be matched
-Antivirus: Clears all virus bombs
-Quantum Translocator: Blocks can be moved anywhere for 4 turns[/color]"
+text = "[color=black]Bishop: Matches blocks diagonally instead of straight lines.
+Tetris: Matches block in tetrominos instead of straight lines.
+Queen: Matches blocks both straight and diagonally.
+Double: Doubles score for 3 rounds.
+Time Stop: Prevents energy going down, and halts matches, for 3 turns to allow for larger matches.
+Crack Blocks: Does 1 damage to all hard blocks. Also breaks virus bombs.
+Colourblind: Allows green and red blocks to be matched.
+Antivirus: Clears all virus bombs.
+Quantum Translocator: Blocks can be moved anywhere for 4 turns.[/color]"
 
 [node name="Page2" type="Node2D" parent="."]
 
@@ -136,21 +136,21 @@ offset_top = -164.0
 offset_right = 459.0
 offset_bottom = 235.0
 bbcode_enabled = true
-text = "[color=black]Glass Block: Only matched if the blocks on either side are the same colour
+text = "[color=black]Glass Block: Only matched if the blocks on either side are the same colour.
 
 
-Hard Blocks: Cannot be directly moved or matched, but matching a nearby block will damage them. Some need to be damaged more than once
-
-
-
-Virus Bomb: Counts downm, and activates a virus when the timer runs out
-
-
-Gold Block: Incredibly hard block, which gives a large score bonus when broken
+Hard Blocks: Cannot be directly moved or matched, but matching a nearby block will damage them. Some need to be damaged more than once.
 
 
 
-Diamond Block: Incredibly hard block, which gives many shards when broken[/color]"
+Virus Bomb: Counts down, and activates a virus when the timer runs out.
+
+
+Gold Block: Incredibly hard block, which gives a large score bonus when broken.
+
+
+
+Diamond Block: Incredibly hard block, which gives many shards when broken.[/color]"
 
 [node name="Tab2" type="Area2D" parent="Page2"]
 
@@ -186,11 +186,11 @@ offset_bottom = 244.0
 bbcode_enabled = true
 text = "[color=black]Welcome to the GalactiCorp™ Mundanium Mines!
 
-As a valued employee, you have been provided with a state-of-the-art quantum translocator mining vessel, the QTπ. Mundanium is valuable mineral, appearing in 6 different isotopes. Your mining vessel is able to rearrange Mundanium isotopes over a short distance in order to improve mining effeciency. Mining veins of 1 or 2 isotops is inefficient, and will not be attempted to avoid loss of company resources.
+As a valued employee, you have been provided with a state-of-the-art quantum translocator mining vessel, the QTπ. Mundanium is a valuable mineral, appearing in 6 different isotopes. Your mining vessel is able to rearrange Mundanium isotopes over a short distance in order to improve mining effeciency. Mining veins of 1 or 2 isotopes is inefficient, and will not be attempted to avoid loss of company resources.
 
-You job will be to rearrange Mundanium-rich ores into efficient mining patterns. Bonuses are available to highly efficient individuals, who will quickly climb the ranks. Once your debt is paid off, you endenture will end and you may be offered one of our highly favourable permanent employee positions. These come with incredible perks such as two (2) paid days off per year, as well as wages in line with galactic standard minimum wage.
+You job will be to rearrange Mundanium-rich ores into efficient mining patterns. Bonuses are available to highly efficient individuals, who will quickly climb the ranks. Once your debt is paid off, your indenture will end and you may be offered one of our highly favourable permanent employee positions. These come with incredible perks such as two (2) paid days off per year, as well as wages in line with galactic standard minimum wage.
 
-During mining, some employees report finding reports of highly valuable Mundanium shards during mining. Please note that collecting and trading such shards is against company policy and will no be tolerated if identified. Illegal modifications to the GalactiCorp™ QTπ is also not allowed. If discovered, the cost of repairs will be added to your debt.
+During mining, some employees report finding highly valuable Mundanium shards. Please note that collecting and trading such shards is against company policy and will not be tolerated if identified. Illegal modifications to the GalactiCorp™ QTπ is also not allowed. If discovered, the cost of repairs will be added to your debt.
 
 (Match 3 or more squares of the same colour to make them disappear)[/color]"
 
