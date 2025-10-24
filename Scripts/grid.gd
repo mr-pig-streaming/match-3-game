@@ -860,4 +860,34 @@ func set_level(level, challenge = false):
 			add_child(piece)
 			move_child(piece, 0)
 			piece.position = grid_to_pixel(x, y)
+		# Challenge levels >= 6 include certain rows or columns being excluded
+		# Maximum of 5 of these rows and columns, since too many would make it literally impossible
+		if (level >= 6):
+			var num_lines = min((level - 3) / 3, 5)
+			var all_lines = range(8)
+			all_lines.shuffle()
+			var lines = all_lines.slice(0, num_lines)
+			for i in range(lines.size()):
+				if i % 2 == 0:
+					exclude_row(lines[i])
+				else:
+					exclude_column(lines[i])
 		challenge_level = true
+
+func exclude_row(row):
+	for x in range(width):
+		var y = row
+		var exclusion_pos = grid_to_pixel(x, y)
+		var exclusion = preload("res://Scenes/exclusion_zone.tscn").instantiate()
+		exclusion.position = exclusion_pos
+		add_child(exclusion)
+		exclusions.append(exclusion)
+
+func exclude_column(col):
+	for y in range(height):
+		var x = col
+		var exclusion_pos = grid_to_pixel(x, y)
+		var exclusion = preload("res://Scenes/exclusion_zone.tscn").instantiate()
+		exclusion.position = exclusion_pos
+		add_child(exclusion)
+		exclusions.append(exclusion)
