@@ -863,7 +863,7 @@ func set_level(level, challenge = false):
 		# Challenge levels >= 6 include certain rows or columns being excluded
 		# Maximum of 5 of these rows and columns, since too many would make it literally impossible
 		if (level >= 6):
-			var num_lines = (level - 3) / 3
+			var num_lines = min((level - 3) / 3, 5)
 			var all_lines = range(8)
 			all_lines.shuffle()
 			var lines = all_lines.slice(0, num_lines)
