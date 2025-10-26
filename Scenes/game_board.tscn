@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://uxafeaixi51b"]
+[gd_scene load_steps=6 format=3 uid="uid://uxafeaixi51b"]
 
 [ext_resource type="Script" path="res://Scripts/game_board.gd" id="1_xjmd6"]
 [ext_resource type="PackedScene" uid="uid://bt3o7e3sy2ltu" path="res://Scenes/side_board.tscn" id="3_guo4f"]
 [ext_resource type="Texture2D" uid="uid://d4kq6v1lx7qb2" path="res://Art/Shutter.png" id="4_i6ubf"]
 [ext_resource type="Texture2D" uid="uid://djky6bpcc888w" path="res://Art/backdrop.png" id="4_l5xhq"]
+[ext_resource type="Texture2D" uid="uid://ca7tpp5hxu72o" path="res://Art/Combo_great.png" id="5_01lll"]
 
 [node name="GameBoard" type="Node2D"]
 script = ExtResource("1_xjmd6")
@@ -55,6 +56,12 @@ offset_top = 670.0
 offset_right = 621.0
 offset_bottom = 701.0
 text = "Guidebook"
+
+[node name="GreatSprite" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(326, 202)
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("5_01lll")
 
 [connection signal="card_activated" from="SideBoard" to="." method="_on_side_board_card_activated"]
 [connection signal="timeout" from="InstantExpiryTimer" to="." method="_on_instant_expiry_timer_timeout"]

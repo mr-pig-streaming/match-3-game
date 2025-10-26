@@ -10,6 +10,7 @@ var match_playing: bool = false
 var powerup_playing: bool = false
 var powerdown_playing: bool = false
 var crack_playing: bool = false
+var combo_playing: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -100,3 +101,12 @@ func play_crack():
 
 func end_crack():
 	crack_playing = false
+
+func play_combo(combo_size):
+	if (!combo_playing):
+		combo_playing = true
+		get_node("ComboPlayer").play()
+		get_node("ComboPlayer").finished.connect(end_combo)
+
+func end_combo():
+	combo_playing = false
