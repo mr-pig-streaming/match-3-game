@@ -1,6 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://c256pq7xrpa0l"]
+[gd_scene load_steps=4 format=3 uid="uid://c256pq7xrpa0l"]
 
 [ext_resource type="Script" path="res://Scripts/grid.gd" id="1_m0tp3"]
+[ext_resource type="Texture2D" uid="uid://kgu5km7ldcbm" path="res://Art/abwabwa.png" id="2_1t75i"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nowxl"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(256, 1, 1)
+direction = Vector3(0, 1, 0)
+initial_velocity_min = 595.74
+initial_velocity_max = 595.74
+gravity = Vector3(0, 98, 0)
+turbulence_enabled = true
 
 [node name="Grid" type="Node2D"]
 script = ExtResource("1_m0tp3")
@@ -16,6 +27,17 @@ one_shot = true
 [node name="Refill_Timer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="Dust_Emitter" type="GPUParticles2D" parent="."]
+z_index = 1
+position = Vector2(320, 80)
+emitting = false
+amount = 24
+process_material = SubResource("ParticleProcessMaterial_nowxl")
+texture = ExtResource("2_1t75i")
+lifetime = 0.8
+one_shot = true
+collision_base_size = 0.0
 
 [connection signal="timeout" from="Collapse_Timer" to="." method="_on_collapse_timer_timeout"]
 [connection signal="timeout" from="Clear_Timer" to="." method="_on_clear_timer_timeout"]

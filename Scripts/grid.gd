@@ -597,6 +597,7 @@ func drop_refill_pieces():
 		k += 1
 		all_pieces[x][y].position = grid_to_pixel(x, y - 1)
 		all_pieces[x][y].move_to(grid_to_pixel(x, y))
+	get_node("Dust_Emitter").restart()
 
 func refill_board():
 	for i in width:
