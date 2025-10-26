@@ -164,6 +164,12 @@ func _on_grid_end_turn(moved: bool):
 	if (moved):
 		get_node("SideBoard/Helper").act()
 		if (get_node("Grid").round_matched >= 5):
+			if (get_node("Grid").round_matched >= 9):
+				get_node("GreatSprite").texture = preload("res://Art/Combo_outstanding.png")
+			elif (get_node("Grid").round_matched >= 7):
+				get_node("GreatSprite").texture = preload("res://Art/Combo_awesome.png")
+			else:
+				get_node("GreatSprite").texture = preload("res://Art/Combo_great.png")
 			get_node("/root/BaseScene/AudioManager").play_combo(get_node("Grid").round_matched)
 			var combo_tween: Tween = create_tween()
 			combo_tween.tween_property(get_node("GreatSprite"), "scale", Vector2(1.0, 1.0), 0.5).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
@@ -172,7 +178,7 @@ func _on_grid_end_turn(moved: bool):
 	pass # Replace with function body.
 
 func remove_combo_sprite():
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(0.5).timeout
 	var combo_tween: Tween = create_tween()
 	combo_tween.tween_property(get_node("GreatSprite"), "scale", Vector2(0.0, 0.0), 0.5).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	combo_tween.play()

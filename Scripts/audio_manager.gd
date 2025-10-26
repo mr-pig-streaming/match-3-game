@@ -104,6 +104,12 @@ func end_crack():
 
 func play_combo(combo_size):
 	if (!combo_playing):
+		if (combo_size >= 9):
+			get_node("ComboPlayer").stream = preload("res://Sound/outstanding.mp3")
+		elif (combo_size >= 7):
+			get_node("ComboPlayer").stream = preload("res://Sound/amazing.mp3")
+		else:
+			get_node("ComboPlayer").stream = preload("res://Sound/Great.mp3")
 		combo_playing = true
 		get_node("ComboPlayer").play()
 		get_node("ComboPlayer").finished.connect(end_combo)
