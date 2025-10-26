@@ -44,7 +44,7 @@ wait_time = 0.5
 one_shot = true
 
 [node name="ShutterSprite" type="Sprite2D" parent="."]
-z_index = 1
+z_index = 2
 position = Vector2(640, -640)
 texture = ExtResource("4_i6ubf")
 
