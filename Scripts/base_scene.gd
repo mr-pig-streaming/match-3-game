@@ -44,6 +44,7 @@ func load_gameboard(save_lines):
 	var tween: Tween = create_tween()
 	tween.tween_property(get_node("ShutterSprite"),"position", Vector2(640, 360), 0.3).set_ease(Tween.EASE_OUT)
 	tween.play()
+	get_node("/root/BaseScene/AudioManager").end_menu_music()
 	await get_tree().create_timer(1.5).timeout
 	
 	get_node("Menu").queue_free()
@@ -54,7 +55,6 @@ func load_gameboard(save_lines):
 	game_board.setup_from_file(save_lines)
 	game_board.set_max_turns(get_node("Globals").max_turns)
 	game_board.game_finished.connect(end_game)
-	get_node("/root/BaseScene/AudioManager").end_menu_music()
 	get_node("/root/BaseScene/AudioManager").play_puzzle_music()
 	game_state = GAME_STATE.IN_GAME
 	
@@ -66,10 +66,10 @@ func load_blackmarket(save_lines):
 	var tween: Tween = create_tween()
 	tween.tween_property(get_node("ShutterSprite"),"position", Vector2(640, 360), 0.3).set_ease(Tween.EASE_OUT)
 	tween.play()
+	get_node("/root/BaseScene/AudioManager").end_menu_music()
 	await get_tree().create_timer(1.5).timeout
 	
 	get_node("Menu").queue_free()
-	get_node("/root/BaseScene/AudioManager").end_menu_music()
 	get_node("Globals").json_to_globals(save_lines.slice(1, 7))
 	var market: BlackMarket = preload("res://Scenes/black_market.tscn").instantiate()
 	market.set_num_diamonds(int(save_lines[0]))
@@ -87,6 +87,7 @@ func new_game():
 	var tween: Tween = create_tween()
 	tween.tween_property(get_node("ShutterSprite"),"position", Vector2(640, 360), 0.3).set_ease(Tween.EASE_OUT)
 	tween.play()
+	get_node("/root/BaseScene/AudioManager").end_menu_music()
 	await get_tree().create_timer(1.5).timeout
 	
 	get_node("Menu").queue_free()
@@ -97,7 +98,6 @@ func new_game():
 	game_board.set_num_turns(get_node("Globals").max_turns)
 	game_board.set_max_turns(get_node("Globals").max_turns)
 	game_board.game_finished.connect(end_game)
-	get_node("/root/BaseScene/AudioManager").end_menu_music()
 	get_node("/root/BaseScene/AudioManager").play_puzzle_music()
 	game_state = GAME_STATE.IN_GAME
 	
@@ -113,8 +113,8 @@ func end_game(game_state):
 		var tween: Tween = create_tween()
 		tween.tween_property(get_node("ShutterSprite"),"position", Vector2(640, 360), 0.3).set_ease(Tween.EASE_OUT)
 		tween.play()
-		await get_tree().create_timer(1.5).timeout
 		get_node("/root/BaseScene/AudioManager").end_puzzle_music()
+		await get_tree().create_timer(1.5).timeout
 		
 		# Show the status screen
 		var status_screen = preload("res://Scenes/status_screen.tscn").instantiate()
@@ -132,7 +132,6 @@ func end_game(game_state):
 		tween.play()
 		await get_tree().create_timer(1.5).timeout
 		
-		get_node("/root/BaseScene/AudioManager").end_puzzle_music()
 		get_node("gameboard").queue_free()
 		var message: Label = Label.new()
 		message.text = "You won! Huzzah!"
@@ -164,10 +163,10 @@ func new_run():
 	var tween: Tween = create_tween()
 	tween.tween_property(get_node("ShutterSprite"),"position", Vector2(640, 360), 0.3).set_ease(Tween.EASE_OUT)
 	tween.play()
+	get_node("/root/BaseScene/AudioManager").end_market_music()
 	await get_tree().create_timer(1.5).timeout
 	
 	get_node("BlackMarket").queue_free()
-	get_node("/root/BaseScene/AudioManager").end_market_music()
 	var game_board: GameBoard = preload("res://Scenes/game_board.tscn").instantiate()
 	add_child(game_board)
 	game_board.setup_from_scratch()

@@ -33,27 +33,50 @@ func end_click():
 func play_puzzle_music():
 	if (!puzzle_music_playing):
 		puzzle_music_playing = true
+		get_node("PuzzleMusicPlayer").volume_db = -80.0
 		get_node("PuzzleMusicPlayer").play()
+		var tween: Tween = create_tween()
+		tween.tween_property(get_node("PuzzleMusicPlayer"), "volume_db", 0.0, 1.0).set_trans(Tween.TRANS_LINEAR)
+		tween.play()
+		#await get_tree().create_timer(1.0).timeout
 
 func end_puzzle_music():
+	var tween: Tween = create_tween()
+	tween.tween_property(get_node("PuzzleMusicPlayer"), "volume_db", -80.0, 1.0).set_trans(Tween.TRANS_LINEAR)
+	tween.play()
+	await get_tree().create_timer(1.0).timeout
 	get_node("PuzzleMusicPlayer").stop()
 	puzzle_music_playing = false
 
 func play_market_music():
 	if (!market_music_playing):
 		market_music_playing = true
+		get_node("BlackMarketMusicPlayer").volume_db = -80.0
 		get_node("BlackMarketMusicPlayer").play()
+		var tween: Tween = create_tween()
+		tween.tween_property(get_node("BlackMarketMusicPlayer"), "volume_db", 0.0, 1.0).set_trans(Tween.TRANS_LINEAR)
+		tween.play()
+		#await get_tree().create_timer(1.0).timeout
 
 func end_market_music():
+	var tween: Tween = create_tween()
+	tween.tween_property(get_node("BlackMarketMusicPlayer"), "volume_db", -80.0, 1.0).set_trans(Tween.TRANS_LINEAR)
+	tween.play()
+	await get_tree().create_timer(1.0).timeout
 	get_node("BlackMarketMusicPlayer").stop()
 	market_music_playing = false
 
 func play_menu_music():
 	if (!menu_music_playing):
 		menu_music_playing = true
+		get_node("MenuMusicPlayer").volume_db = 0.0
 		get_node("MenuMusicPlayer").play()
 
 func end_menu_music():
+	var tween: Tween = create_tween()
+	tween.tween_property(get_node("MenuMusicPlayer"), "volume_db", -80.0, 1.0).set_trans(Tween.TRANS_LINEAR)
+	tween.play()
+	await get_tree().create_timer(1.0).timeout
 	get_node("MenuMusicPlayer").stop()
 	menu_music_playing = false
 
