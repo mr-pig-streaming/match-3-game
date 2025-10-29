@@ -11,6 +11,7 @@ var powerup_playing: bool = false
 var powerdown_playing: bool = false
 var crack_playing: bool = false
 var combo_playing: bool = false
+var achievement_playing: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -139,3 +140,12 @@ func play_combo(combo_size):
 
 func end_combo():
 	combo_playing = false
+
+func play_achievement():
+	if (!achievement_playing):
+		achievement_playing = true
+		get_node("AchievementPlayer").play()
+		get_node("AchievementPlayer").finished.connect(end_achievement)
+
+func end_achievement():
+	achievement_playing = false

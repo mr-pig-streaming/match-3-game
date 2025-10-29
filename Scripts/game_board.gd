@@ -175,6 +175,8 @@ func _on_grid_end_turn(moved: bool):
 			combo_tween.tween_property(get_node("GreatSprite"), "scale", Vector2(1.0, 1.0), 0.5).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 			combo_tween.finished.connect(remove_combo_sprite)
 			combo_tween.play()
+		if (get_node("Grid").round_matched >= 10):
+			get_node("/root/BaseScene/AchievementManager").unlock_achievement("Combo Master")
 	pass # Replace with function body.
 
 func remove_combo_sprite():
@@ -402,6 +404,9 @@ func _input(event):
 	if Input.is_key_pressed(KEY_D):
 		print("Activating Virus")
 		activate_debuff()
+	if Input.is_key_pressed(KEY_A):
+		print("Activating Test Achievement")
+		get_node("/root/BaseScene/AchievementManager").unlock_achievement("Test")
 	if Input.is_key_pressed(KEY_ESCAPE):
 		print("Popup Menu")
 		get_node("SideBoard").active = false
