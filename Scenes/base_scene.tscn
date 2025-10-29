@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3xi15j3i8y3g"]
+[gd_scene load_steps=6 format=3 uid="uid://b3xi15j3i8y3g"]
 
 [ext_resource type="Script" path="res://Scripts/base_scene.gd" id="1_ek7le"]
 [ext_resource type="PackedScene" uid="uid://eeh2sqx64pv7" path="res://Scenes/globals.tscn" id="2_qdjod"]
+[ext_resource type="PackedScene" uid="uid://b4e67lnnts2ef" path="res://Scenes/achievement_manager.tscn" id="5_pay8i"]
 [ext_resource type="Texture2D" uid="uid://d4kq6v1lx7qb2" path="res://Art/Shutter.png" id="7_0tel3"]
 [ext_resource type="PackedScene" uid="uid://cvrlm64rqh7cu" path="res://Scenes/audio_manager.tscn" id="8_icstm"]
 
@@ -10,9 +11,13 @@ script = ExtResource("1_ek7le")
 
 [node name="Globals" parent="." instance=ExtResource("2_qdjod")]
 
+[node name="AudioManager" parent="." instance=ExtResource("8_icstm")]
+
+[node name="AchievementManager" parent="." instance=ExtResource("5_pay8i")]
+z_index = 5
+position = Vector2(640, 600)
+
 [node name="ShutterSprite" type="Sprite2D" parent="."]
 z_index = 5
 position = Vector2(640, -640)
 texture = ExtResource("7_0tel3")
-
-[node name="AudioManager" parent="." instance=ExtResource("8_icstm")]

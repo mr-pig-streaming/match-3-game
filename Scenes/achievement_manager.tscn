@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4e67lnnts2ef"]
+
+[ext_resource type="Script" path="res://Scripts/achievement_manager.gd" id="1_ddvol"]
+[ext_resource type="Texture2D" uid="uid://c1u36luaxkm6n" path="res://Art/achievement.png" id="2_1dgn2"]
+
+[node name="AchievementManager" type="Node2D"]
+script = ExtResource("1_ddvol")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1e-05, 1e-05)
+texture = ExtResource("2_1dgn2")
+
+[node name="TitleLabel" type="RichTextLabel" parent="Sprite2D"]
+offset_left = -108.0
+offset_top = -39.0
+offset_right = 192.0
+offset_bottom = -4.0
+
+[node name="DescriptionLabel" type="RichTextLabel" parent="Sprite2D"]
+offset_left = -101.0
+offset_top = 4.0
+offset_right = 191.0
+offset_bottom = 40.0
