@@ -63,13 +63,13 @@ func setup_from_file(save_lines):
 	# Setup the level select
 	json = JSON.new()
 	json.parse(save_lines[4])
-	var select: LevelSelect = preload("res://Scenes/level_select.tscn").instantiate()
-	add_child(select)
-	select.name = "LevelSelect"
-	select.active = true
-	select.visible = true
-	select.setup_from_array(json.data)
-	active_scene = select
+	levelSelect = preload("res://Scenes/level_select.tscn").instantiate()
+	add_child(levelSelect)
+	levelSelect.name = "LevelSelect"
+	levelSelect.active = true
+	levelSelect.visible = true
+	levelSelect.setup_from_array(json.data)
+	active_scene = levelSelect
 	get_node("Score_Label").text = "Score: " + str(score)
 	get_node("Turns_Label").text = "Turns Left: " + str(turns_left)  + "/" + str(max_turns)
 	get_node("Goal_Label").text = "Goal: 0/" + str(goal)
@@ -112,18 +112,16 @@ func check_win_challenge(num_blocks):
 		level_select()
 
 func level_select():
-	if (levelSelect != null):
-		levelSelect.queue_free()
-		levelSelect = null
-	var select: LevelSelect = preload("res://Scenes/level_select.tscn").instantiate()
-	add_child(select)
-	select.name = "LevelSelect"
-	select.active = true
-	select.visible = true
-	select.setup(2)
+	if (levelSelect == null):
+		levelSelect = preload("res://Scenes/level_select.tscn").instantiate()
+		add_child(levelSelect)
+		levelSelect.name = "LevelSelect"
+		levelSelect.active = true
+		levelSelect.visible = true
+	levelSelect.setup()
 	saved_state = "IN_RUN" + "\n" + get_node("SideBoard").sideboard_to_json() + gameboard_to_json()
 	get_parent().save_state = saved_state
-	transition_to(select)
+	transition_to(levelSelect)
 
 func add_diamonds(num_to_add):
 	diamonds += num_to_add
@@ -209,8 +207,9 @@ func transition_to(target_scene):
 	await get_tree().create_timer(1.2).timeout
 	inactive_scene.active = false
 	inactive_scene.visible = false
-	inactive_scene.queue_free()
-	inactive_scene = null
+	if (!(inactive_scene is LevelSelect)):
+		inactive_scene.queue_free()
+		inactive_scene = null
 	target_scene.active = true
 	target_scene.visible = true
 	print("Active scene is a Grid? " + str(active_scene is Grid))
