@@ -19,15 +19,24 @@ func _ready():
 	pass # Replace with function body.
 
 func _to_string():
-	return JSON.stringify(rooms)
+	var values = [special_index, current_index]
+	values.append_array(rooms)
+	return JSON.stringify(values)
 
 func setup_from_array(_rooms):
-	rooms = _rooms
+	special_index = int(_rooms[0])
+	current_index = int(_rooms[1])
+	rooms = _rooms.slice(2, 4)
 	get_node("Left").text = rooms[0]
 	get_node("Left").pressed.connect(choose_level.bind(rooms[0]))
-	if (rooms.size() > 1):
+	if (rooms.size() > 1 && get_node("/root/BaseScene/Globals").sideboard_unlocked):
 		get_node("Right").text = rooms[1]
 		get_node("Right").pressed.connect(choose_level.bind(rooms[1]))
+		get_node("Right").disabled = false
+		get_node("Right").visible = true
+	else:
+		get_node("Right").disabled = true
+		get_node("Right").visible = false
 
 func setup():
 	print("Current: " + str(current_index) + " Special: " + str(special_index))
