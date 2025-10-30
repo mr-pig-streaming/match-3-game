@@ -21,7 +21,7 @@ func quit_game():
 	get_tree().quit()
 
 func save_game():
-	var save_string = save_state + "\n" + get_node("Globals").globals_to_json()
+	var save_string = save_state + "\n" + get_node("Globals").globals_to_json() + "\n" + get_node("AchievementManager").achievements_to_json()
 	print(save_string)
 	var file = FileAccess.open("test_save.txt", FileAccess.WRITE)
 	file.store_string(save_string)
@@ -37,6 +37,8 @@ func load_game():
 		load_gameboard(save_lines.slice(1, 12))
 	if save_lines[0] == "BLACK_MARKET":
 		load_blackmarket(save_lines.slice(1,8))
+	# Load the achievements
+	get_node("AchievementManager").json_to_achievements(save_lines[-1])
 
 func load_gameboard(save_lines):
 	get_node("AudioManager").play_click()

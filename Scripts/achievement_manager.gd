@@ -34,3 +34,17 @@ func unlock_achievement(name):
 			var tween2 = create_tween()
 			tween2.tween_property(get_node("Sprite2D"), "scale", Vector2(0.0, 0.0), 0.7).set_trans(Tween.TRANS_ELASTIC)
 			tween2.play()
+
+func achievements_to_json():
+	var json_string: String = ""
+	for a in achievements:
+		json_string += str(a[2]) + ","
+	return json_string.left(-1)
+
+func json_to_achievements(json_string):
+	var array = json_string.split(",")
+	for i in range(array.size()):
+		if array[i] == "true":
+			achievements[i][2] = true
+		else:
+			achievements[i][2] = false
