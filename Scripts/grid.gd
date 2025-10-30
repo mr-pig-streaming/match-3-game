@@ -97,6 +97,14 @@ var rotate_piece = preload("res://Scenes/rotate_piece.tscn")
 var special_pieces = [sand_piece, stone_piece, metal_piece]
 var hard_pieces = [sand_piece, stone_piece, metal_piece]
 var all_indexes = range(width * height)
+var rotate_squares = [
+	Vector2(2, 1),
+	Vector2(5, 1),
+	Vector2(1, 4),
+	Vector2(6, 4),
+	Vector2(2, 7),
+	Vector2(5, 7)
+]
 
 var all_pieces = []
 
@@ -830,6 +838,18 @@ func set_level(level, challenge = false):
 			piece.position = grid_to_pixel(row, col)
 		# The probability of new special blocks spawning
 		special_chance = float(num_specials) / float(width * height)
+		var num_rotates = min(num_specials - 2, 6)
+		num_rotates = max(num_rotates, 0)
+		print("Num rotates: " + str(num_rotates))
+		rotate_squares.shuffle()
+		var rotates = rotate_squares.slice(0, num_rotates)
+		for r in rotates:
+			all_pieces[r.x][r.y].queue_free()
+			var piece = rotate_piece.instantiate()
+			all_pieces[r.x][r.y] = piece
+			add_child(piece)
+			move_child(piece, 0)
+			piece.position = grid_to_pixel(r.x, r.y)
 	if (challenge):
 		print("Challenge level")
 		special_indexes = all_indexes
