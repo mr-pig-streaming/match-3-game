@@ -12,11 +12,3 @@ offset_right = 138.0
 offset_bottom = 391.0
 text = "Left
 "
-
-[node name="Right" type="Button" parent="."]
-offset_left = 300.0
-offset_top = 360.0
-offset_right = 349.0
-offset_bottom = 391.0
-text = "Right
-"
