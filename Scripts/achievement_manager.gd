@@ -22,9 +22,13 @@ func unlock_achievement(name):
 		if (a[0] == name && a[2] == false):
 			a[2] = true
 			# TBD: Unlock with the Steam SDK
+			get_node("Sprite2D/TitleLabel").clear()
+			get_node("Sprite2D/TitleLabel").text = ""
 			get_node("Sprite2D/TitleLabel").push_bold()
 			get_node("Sprite2D/TitleLabel").push_font_size(18)
 			get_node("Sprite2D/TitleLabel").append_text("[center]" + a[0] + "[/center]")
+			get_node("Sprite2D/DescriptionLabel").clear()
+			get_node("Sprite2D/DescriptionLabel").text = ""
 			get_node("Sprite2D/DescriptionLabel").append_text("[center]" + a[1] + "[/center]")
 			var tween = create_tween()
 			tween.tween_property(get_node("Sprite2D"), "scale", Vector2(1.0, 1.0), 0.7).set_trans(Tween.TRANS_ELASTIC)
