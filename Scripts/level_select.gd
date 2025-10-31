@@ -14,8 +14,8 @@ var current_index: int
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	current_index = -1
-	special_index = randi_range(0, 2)
+	current_index = 0
+	special_index = randi_range(1, 2)
 	pass # Replace with function body.
 
 func _to_string():
@@ -30,13 +30,17 @@ func setup_from_array(_rooms):
 	get_node("Left").text = rooms[0]
 	get_node("Left").pressed.connect(choose_level.bind(rooms[0]))
 	if (rooms.size() > 1 && get_node("/root/BaseScene/Globals").sideboard_unlocked):
+		var right: Button = Button.new()
+		right.name = "Right"
+		right.position = Vector2(300, 360)
+		add_child(right)
 		get_node("Right").text = rooms[1]
 		get_node("Right").pressed.connect(choose_level.bind(rooms[1]))
 		get_node("Right").disabled = false
 		get_node("Right").visible = true
 	else:
-		get_node("Right").disabled = true
-		get_node("Right").visible = false
+		if (get_node("Right") != null):
+			get_node("Right").queue_free()
 
 func setup():
 	print("Current: " + str(current_index) + " Special: " + str(special_index))
@@ -45,13 +49,19 @@ func setup():
 	get_node("Left").text = rooms[0]
 	get_node("Left").pressed.connect(choose_level.bind(rooms[0]))
 	if (current_index == special_index && get_node("/root/BaseScene/Globals").sideboard_unlocked):
+		print("Adding special room button")
+		var right: Button = Button.new()
+		right.name = "Right"
+		right.position = Vector2(300, 360)
+		add_child(right)
+		move_child(right, -1)
 		get_node("Right").text = rooms[1]
 		get_node("Right").pressed.connect(choose_level.bind(rooms[1]))
 		get_node("Right").disabled = false
 		get_node("Right").visible = true
 	else:
-		get_node("Right").disabled = true
-		get_node("Right").visible = false
+		if (get_node("Right") != null):
+			get_node("Right").queue_free()
 	current_index = (current_index + 1) % 3
 	if (current_index == 0):
 		special_index = randi_range(0, 2)
