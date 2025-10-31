@@ -273,7 +273,7 @@ func unmatch_all():
 # Determines if there is a match at the given position
 func match_at(x, y, colour):
 	# Stone and virus pieces don't match
-	if (colour == "Stone" || colour == "Virus"):
+	if (colour == "Stone" || colour == "Virus" || colour == "XStone" || colour == "XVirus"):
 		return false
 	# If we've already marked this as matched for any reason, then return true
 	if (all_pieces[x][y].matched):
@@ -454,7 +454,7 @@ func clear_matches():
 				# If any neighbour is stone or virus, reduce its durability and crack it
 				var neighbours = get_neighbours(i, j)
 				for n in neighbours:
-					if (all_pieces[n.x][n.y].colour == "Stone" || all_pieces[n.x][n.y].colour == "Virus"):
+					if (all_pieces[n.x][n.y].colour == "Stone" || all_pieces[n.x][n.y].colour == "Virus" || all_pieces[n.x][n.y].colour == "XStone" || all_pieces[n.x][n.y].colour == "XVirus"):
 						all_pieces[n.x][n.y].durability -= 1
 						all_pieces[n.x][n.y].crack_piece()
 	if (collapse_needed):
@@ -465,13 +465,13 @@ func clear_matches():
 func clear_broken():
 	for i in width:
 		for j in height:
-			if ((all_pieces[i][j].colour == "Stone" || all_pieces[i][j].colour == "Virus") && all_pieces[i][j].broken):
+			if ((all_pieces[i][j].colour == "Stone" || all_pieces[i][j].colour == "Virus" || all_pieces[i][j].colour == "XStone" || all_pieces[i][j].colour == "XVirus") && all_pieces[i][j].broken):
 				all_pieces[i][j].move_to_bag()
 				# Check the effect to handle gold and diamond pieces
-				if (all_pieces[i][j].colour == "Stone" && all_pieces[i][j].effect == "GOLD"):
+				if ((all_pieces[i][j].colour == "Stone" || all_pieces[i][j].colour == "XStone") && all_pieces[i][j].effect == "GOLD"):
 					print("Gold piece broken...")
 					temp_multiplier *= 2
-				if (all_pieces[i][j].colour == "Stone" && all_pieces[i][j].effect == "DIAMOND"):
+				if ((all_pieces[i][j].colour == "Stone" || all_pieces[i][j].colour == "XStone") && all_pieces[i][j].effect == "DIAMOND"):
 					print("Diamond piece broken...")
 					get_parent().add_diamonds(5)
 				#all_pieces[i][j].queue_free()
@@ -524,8 +524,12 @@ func _input(event):
 			if (in_grid(first_touch) && in_grid(final_touch)):
 				if (all_pieces[first_touch.x][first_touch.y].colour != "Stone" && 
 					all_pieces[final_touch.x][final_touch.y].colour != "Stone" &&
+					all_pieces[first_touch.x][first_touch.y].colour != "XStone" && 
+					all_pieces[final_touch.x][final_touch.y].colour != "XStone" &&
 					all_pieces[first_touch.x][first_touch.y].colour != "Virus" && 
-					all_pieces[final_touch.x][final_touch.y].colour != "Virus"):
+					all_pieces[final_touch.x][final_touch.y].colour != "Virus" &&
+					all_pieces[first_touch.x][first_touch.y].colour != "XVirus" && 
+					all_pieces[final_touch.x][final_touch.y].colour != "XVirus"):
 					moved = true
 					move_pieces(first_touch, final_touch)
 
@@ -685,7 +689,7 @@ func count_challenge_blocks():
 	var num_blocks = 0
 	for i in width:
 		for j in height:
-			if (all_pieces[i][j].colour == "Stone" && (all_pieces[i][j].effect == "GOLD" || all_pieces[i][j].effect == "DIAMOND")):
+			if ((all_pieces[i][j].colour == "Stone" || all_pieces[i][j].colour == "XStone") && (all_pieces[i][j].effect == "GOLD" || all_pieces[i][j].effect == "DIAMOND")):
 				num_blocks += 1
 			if (all_pieces[i][j].colour == "Virus"):
 				num_blocks += 1
@@ -700,7 +704,7 @@ func crack_all_blocks():
 	active = false
 	for i in range(width):
 		for j in range(height):
-			if (all_pieces[i][j].colour == "Stone"):
+			if (all_pieces[i][j].colour == "Stone" || all_pieces[i][j].colour == "XStone"):
 				all_pieces[i][j].durability -= 1
 				all_pieces[i][j].crack_piece()
 				if (all_pieces[i][j].durability <= 0):
@@ -714,7 +718,7 @@ func crack_all_blocks():
 func harden_all_blocks():
 	for i in range(width):
 		for j in range(height):
-			if (all_pieces[i][j].colour == "Stone"):
+			if (all_pieces[i][j].colour == "Stone" || all_pieces[i][j].colour == "XStone"):
 				all_pieces[i][j].durability += 1
 				print("Hardening at " + str(i) + ", " + str(j))
 				all_pieces[i][j].harden_piece()
