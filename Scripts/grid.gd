@@ -522,7 +522,9 @@ func _input(event):
 			var pos = get_global_mouse_position()
 			final_touch = pixel_to_grid(pos.x, pos.y)
 			if (in_grid(first_touch) && in_grid(final_touch)):
-				if (all_pieces[first_touch.x][first_touch.y].colour != "Stone" && 
+				if (!all_pieces[first_touch.x][first_touch.y].fixed &&
+					!all_pieces[final_touch.x][final_touch.y].fixed &&
+					all_pieces[first_touch.x][first_touch.y].colour != "Stone" && 
 					all_pieces[final_touch.x][final_touch.y].colour != "Stone" &&
 					all_pieces[first_touch.x][first_touch.y].colour != "XStone" && 
 					all_pieces[final_touch.x][final_touch.y].colour != "XStone" &&
