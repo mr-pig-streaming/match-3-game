@@ -18,6 +18,14 @@ var positive_diag_multiplier = 1.0
 var negative_diag_multiplier = 1.0
 var cross_diag_multiplier = 1.0
 
+# Used to keep track of how many of each colour has been matched
+var red_matched = 0
+var orange_matched = 0
+var yellow_matched = 0
+var green_matched = 0
+var blue_matched = 0
+var purple_matched = 0
+
 # All the cards/chips 
 var deck = []
 # The currently active scene. Used for scene transitions

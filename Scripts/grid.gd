@@ -693,6 +693,7 @@ func check_for_matches():
 				# If this colour isn't debuffed, add to the match count
 				if (!debuff_colours.has(all_pieces[i][j].colour)):
 					round_matched += 1
+					colour_count(all_pieces[i][j])
 			# If we are working with max 3, then return immediately if we have 3 matches
 			if (debuff_effects.has("MATCH_TYPE_3") && round_matched >= 3):
 				return matches_found
@@ -858,11 +859,27 @@ func refill_board():
 	recolour_for_exclusion()
 	squares_to_drop = []
 
+func colour_count(piece):
+	match (piece.colour):
+		"red":
+			get_parent().red_matched += 1
+		"orange":
+			get_parent().orange_matched += 1
+		"yellow":
+			get_parent().yellow_matched += 1
+		"green":
+			get_parent().green_matched += 1
+		"blue":
+			get_parent().blue_matched += 1
+		"purple":
+			get_parent().purple_matched += 1
+
 func count_matches():
 	for i in width:
 		for j in height:
 			if (all_pieces[i][j].matched):
 				round_matched += 1
+				colour_count(all_pieces[i][j])
 	cross_matched += count_corners()
 	vertical_matched += count_vertical_matches()
 	horizontal_matched += count_horizontal_matches()
@@ -1085,6 +1102,7 @@ func spawn_special_blocks():
 							elif (!all_pieces[c][y].matched):
 								all_pieces[c][y].matched = true
 								round_matched += 1
+								colour_count(all_pieces[c][y])
 						for r in height:
 							if (all_pieces[x][r].fixed):
 								pass
@@ -1094,6 +1112,7 @@ func spawn_special_blocks():
 							elif (!all_pieces[x][r].matched):
 								all_pieces[x][r].matched = true
 								round_matched += 1
+								colour_count(all_pieces[x][r])
 					if (match_type == MATCH_TYPE.DIAGONAL || match_type == MATCH_TYPE.QUEEN):
 						var positive_c = y - x
 						for w in width:
@@ -1108,6 +1127,7 @@ func spawn_special_blocks():
 							elif (!all_pieces[w][r].matched):
 								all_pieces[w][r].matched = true
 								round_matched += 1
+								colour_count(all_pieces[w][r])
 						var y_pos = (positive_c - 1) * 64 + 32
 						get_node("PosDiagonalLightning").visible = true
 						get_node("PosDiagonalLightning").position = Vector2(0, y_pos)
@@ -1124,6 +1144,7 @@ func spawn_special_blocks():
 							elif (!all_pieces[w][r].matched):
 								all_pieces[w][r].matched = true
 								round_matched += 1
+								colour_count(all_pieces[w][r])
 						y_pos = (negative_c - 8) * 64 + 32
 						get_node("NegDiagonalLightning").visible = true
 						get_node("NegDiagonalLightning").position = Vector2(720, y_pos)
@@ -1145,6 +1166,7 @@ func match_special_blocks():
 					elif (!all_pieces[n.x][n.y].matched):
 						all_pieces[n.x][n.y].matched = true
 						round_matched += 1
+						colour_count(all_pieces[n.x][n.y])
 
 func _on_collapse_timer_timeout():
 	collapse_columns()
@@ -1194,6 +1216,12 @@ func _on_refill_timer_timeout():
 	get_parent().add_score(base_score)
 	total_matched += round_matched
 	print("Total matched: " + str(total_matched))
+	print("Red matched: " + str(get_parent().red_matched))
+	print("Orange matched: " + str(get_parent().orange_matched))
+	print("Yellow matched: " + str(get_parent().yellow_matched))
+	print("Green matched: " + str(get_parent().green_matched))
+	print("Blue matched: " + str(get_parent().blue_matched))
+	print("Purple matched: " + str(get_parent().purple_matched))
 	
 	if (challenge_level):
 		get_parent().check_win_challenge(count_challenge_blocks())
