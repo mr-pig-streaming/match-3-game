@@ -178,6 +178,10 @@ func reduce_turns(num_turns):
 	turns_left -= num_turns
 	get_node("UI Container/Turns_Label").text = "Turns Left: " + str(turns_left)  + "/" + str(max_turns)
 
+func add_turns(num_turns):
+	turns_left += num_turns
+	get_node("UI Container/Turns_Label").text = "Turns Left: " + str(turns_left)  + "/" + str(max_turns)
+
 
 func _on_side_board_card_activated(card: Card):
 	if (active_scene is Grid):

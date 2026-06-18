@@ -98,7 +98,8 @@ var possible_pieces = [
 	preload("res://Scenes/orange_piece.tscn"),
 	preload("res://Scenes/purple_piece.tscn"),
 	preload("res://Scenes/red_piece.tscn"),
-	preload("res://Scenes/yellow_piece.tscn")
+	preload("res://Scenes/yellow_piece.tscn"),
+	preload("res://Scenes/energy_piece.tscn")
 ]
 
 var colourblind_pieces = [
@@ -107,6 +108,7 @@ var colourblind_pieces = [
 	preload("res://Scenes/purple_piece.tscn"),
 	preload("res://Scenes/red_piece.tscn"),
 	preload("res://Scenes/yellow_piece.tscn"),
+	preload("res://Scenes/energy_piece.tscn")
 ]
 
 var null_piece = preload("res://Scenes/null_piece.tscn")
@@ -162,6 +164,9 @@ var bombs_matched = 0
 var bonuses_matched = 0
 
 var test_y_offset = 0
+
+# The number of energy blocks that have been matched
+var energy_matched = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -691,7 +696,9 @@ func check_for_matches():
 				all_pieces[i][j].matched = true
 				matches_found = true
 				# If this colour isn't debuffed, add to the match count
-				if (!debuff_colours.has(all_pieces[i][j].colour)):
+				if (all_pieces[i][j].colour == "energy"):
+					energy_matched += 1
+				elif (!debuff_colours.has(all_pieces[i][j].colour)):
 					round_matched += 1
 					colour_count(all_pieces[i][j])
 			# If we are working with max 3, then return immediately if we have 3 matches
@@ -1188,6 +1195,7 @@ func _on_clear_timer_timeout():
 	get_node("/root/BaseScene/AudioManager").play_match(pitch_shift)
 
 func _on_refill_timer_timeout():
+	print("Energy Matched: " + str(energy_matched))
 	refill_board()
 	countdown_targets()
 	if (new_target_needed):
@@ -1212,16 +1220,14 @@ func _on_refill_timer_timeout():
 	for x in diag_cross_matched:
 		base_score *= get_parent().cross_diag_multiplier
 	print("Multiplied score = " + str(base_score))
-	get_parent().add_diamonds(round_matched - 3)
-	get_parent().add_score(base_score)
-	total_matched += round_matched
+	if (round_matched >= 3):
+		get_parent().add_diamonds(round_matched - 3)
+		get_parent().add_score(base_score)
+		total_matched += round_matched
+	if (energy_matched >= 3):
+		get_parent().add_turns(energy_matched - 2)
+	energy_matched = 0
 	print("Total matched: " + str(total_matched))
-	print("Red matched: " + str(get_parent().red_matched))
-	print("Orange matched: " + str(get_parent().orange_matched))
-	print("Yellow matched: " + str(get_parent().yellow_matched))
-	print("Green matched: " + str(get_parent().green_matched))
-	print("Blue matched: " + str(get_parent().blue_matched))
-	print("Purple matched: " + str(get_parent().purple_matched))
 	
 	if (challenge_level):
 		get_parent().check_win_challenge(count_challenge_blocks())
