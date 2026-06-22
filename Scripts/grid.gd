@@ -92,15 +92,17 @@ var new_target_needed = false
 @onready var clear_timer = $Clear_Timer
 @onready var refill_timer = $Refill_Timer
 
-var possible_pieces = [
-	preload("res://Scenes/blue_piece.tscn"),
-	preload("res://Scenes/green_piece.tscn"),
-	preload("res://Scenes/orange_piece.tscn"),
-	preload("res://Scenes/purple_piece.tscn"),
-	preload("res://Scenes/red_piece.tscn"),
-	preload("res://Scenes/yellow_piece.tscn"),
-	preload("res://Scenes/energy_piece.tscn")
-]
+# Dictionary to keep track of the likelihood of various pieces
+var possible_pieces = {
+	"red": 1.0,
+	"orange": 1.0,
+	"yellow": 1.0,
+	"green": 1.0,
+	"blue": 1.0,
+	"purple": 1.0,
+	"energy": 0.2
+}
+
 
 var colourblind_pieces = [
 	preload("res://Scenes/blue_piece.tscn"),
@@ -199,40 +201,54 @@ func clear_board():
 				all_pieces[i][j].queue_free()
 	all_pieces = setup_array()
 
+func random_piece(total_weights):
+	var k = randf_range(0, total_weights)
+	var piece
+	for colour in possible_pieces:
+		k -= possible_pieces[colour]
+		if k <= 0:
+			match colour:
+				"red": piece = preload("res://Scenes/red_piece.tscn").instantiate()
+				"orange": piece = preload("res://Scenes/orange_piece.tscn").instantiate()
+				"yellow": piece = preload("res://Scenes/yellow_piece.tscn").instantiate()
+				"green": piece = preload("res://Scenes/green_piece.tscn").instantiate()
+				"blue": piece = preload("res://Scenes/blue_piece.tscn").instantiate()
+				"purple": piece = preload("res://Scenes/purple_piece.tscn").instantiate()
+				"energy": piece = preload("res://Scenes/energy_piece.tscn").instantiate()
+			return piece
+
 func remove_setup_matches():
-	var refill_pieces = possible_pieces
-	if (active_effects.has("COLOURBLIND")):
-		refill_pieces = colourblind_pieces
-	var k = randi_range(0, refill_pieces.size() - 1)
+	var total_weights = 0.0
+	for p in possible_pieces:
+		total_weights += possible_pieces[p]
 	for i in width:
 		for j in height:
 			if (all_pieces[i][j].matched):
-				var piece: Piece = refill_pieces[k].instantiate()
+				var piece = random_piece(total_weights)
 				while (all_pieces[i][j].matches(piece.colour)):
 					piece.queue_free()
-					k = (k + 1) % (refill_pieces.size())
-					piece = refill_pieces[k].instantiate()
+					piece = random_piece(total_weights)
 				all_pieces[i][j].queue_free()
 				all_pieces[i][j] = piece
 				all_pieces[i][j].matched = false
 				add_child(all_pieces[i][j])
 				move_child(all_pieces[i][j], 0)
 				all_pieces[i][j].position = grid_to_pixel(i, j)
-				k = (k + 1) % (refill_pieces.size())
 
 func setup_pieces():
 	remove_obscured()
 	remove_exclusion_zones()
 	remove_conveyers()
+	# Calculate the total weights of all possible pieces
+	var total_weights = 0.0
+	for p in possible_pieces:
+		total_weights += possible_pieces[p]
 	for i in width:
 		for j in height:
-			var k = randi_range(0, possible_pieces.size() - 1)
-			var piece: Piece = possible_pieces[k].instantiate()
+			var piece = random_piece(total_weights)
 			while (match_at(i, j, piece.colour)):
-				print("Match found, replacing...")
-				piece.queue_free()
-				k = (k + 1) % (possible_pieces.size())
-				piece = possible_pieces[k].instantiate()
+				print("Match found, removing...")
+				piece = random_piece(total_weights)
 			all_pieces[i][j] = piece
 			add_child(piece)
 			move_child(piece, 0)
@@ -833,6 +849,9 @@ func drop_refill_pieces():
 	get_node("Dust_Emitter").restart()
 
 func refill_board():
+	var total_weights = 0.0
+	for p in possible_pieces:
+		total_weights += possible_pieces[p]
 	for i in width:
 		for j in height:
 			if (all_pieces[i][j].colour == "null" || all_pieces[i][j].colour == "Xnull"):
@@ -847,11 +866,9 @@ func refill_board():
 					move_child(piece, 0)
 					continue
 				# Place a normal coloured block
-				var k = randi_range(0, possible_pieces.size() - 1)
-				var piece: Piece = possible_pieces[k].instantiate()
+				var piece: Piece = random_piece(total_weights)
 				while (match_at(i, j, piece.colour)):
-					k = (k + 1) % (possible_pieces.size() - 1)
-					piece = possible_pieces[k].instantiate()
+					piece = random_piece(total_weights)
 				squares_to_drop.append(Vector2(i, j))
 				all_pieces[i][j] = piece
 				add_child(piece)
