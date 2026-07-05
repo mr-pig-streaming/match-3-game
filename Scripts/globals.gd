@@ -50,7 +50,7 @@ var card_upgrades= [
 	["Starting Chip: Crack Blocks", 40, false, false],
 ]
 
-var sideboard_unlocked = false
+var sideboard_unlocked = true
 
 var radar_unlocked = false
 
@@ -62,7 +62,7 @@ var starting_shards = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	max_turns = 25
+	max_turns = 250
 	num_card_slots = 1
 	print("Max turns: " + str(max_turns))
 	starting_deck = []
