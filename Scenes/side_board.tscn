@@ -40,6 +40,47 @@ theme = ExtResource("2_hpxxr")
 bbcode_enabled = true
 text = "[center]EFFICIENY TRACKER[/center]"
 
+[node name="ColourContainer" type="GridContainer" parent="."]
+offset_left = 917.0
+offset_top = 389.0
+offset_right = 1142.0
+offset_bottom = 476.0
+size_flags_horizontal = 6
+size_flags_vertical = 4
+theme_override_constants/h_separation = 25
+theme_override_constants/v_separation = 25
+columns = 3
+
+[node name="RedButton" type="Button" parent="ColourContainer"]
+layout_mode = 2
+disabled = true
+text = "red"
+
+[node name="OrangeButton" type="Button" parent="ColourContainer"]
+layout_mode = 2
+disabled = true
+text = "orange"
+
+[node name="YellowButton" type="Button" parent="ColourContainer"]
+layout_mode = 2
+disabled = true
+text = "yellow"
+
+[node name="GreenButton" type="Button" parent="ColourContainer"]
+layout_mode = 2
+disabled = true
+text = "green"
+
+[node name="BlueButton" type="Button" parent="ColourContainer"]
+layout_mode = 2
+disabled = true
+text = "blue"
+
+[node name="PurpleButton" type="Button" parent="ColourContainer"]
+layout_mode = 2
+disabled = true
+text = "purple"
+
 [node name="EfficiencyTracker" type="GridContainer" parent="."]
 offset_left = 810.0
 offset_top = 544.0
@@ -102,3 +143,9 @@ texture = ExtResource("2_ao2gv")
 [connection signal="mouse_exited" from="ChipArea" to="." method="_on_chip_area_mouse_exited"]
 [connection signal="pressed" from="DispenserButton" to="." method="_on_dispenser_button_pressed"]
 [connection signal="pressed" from="ViewButton" to="." method="_on_view_button_pressed"]
+[connection signal="pressed" from="ColourContainer/RedButton" to="." method="_on_red_button_pressed"]
+[connection signal="pressed" from="ColourContainer/OrangeButton" to="." method="_on_orange_button_pressed"]
+[connection signal="pressed" from="ColourContainer/YellowButton" to="." method="_on_yellow_button_pressed"]
+[connection signal="pressed" from="ColourContainer/GreenButton" to="." method="_on_green_button_pressed"]
+[connection signal="pressed" from="ColourContainer/BlueButton" to="." method="_on_blue_button_pressed"]
+[connection signal="pressed" from="ColourContainer/PurpleButton" to="." method="_on_purple_button_pressed"]

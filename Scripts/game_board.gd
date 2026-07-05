@@ -210,6 +210,7 @@ func _on_grid_end_turn(moved: bool):
 			combo_tween.play()
 		if (get_node("Grid").round_matched >= 10):
 			get_node("/root/BaseScene/AchievementManager").unlock_achievement("Combo Master")
+	get_node("SideBoard").update_buttons()
 	pass # Replace with function body.
 
 func remove_combo_sprite():

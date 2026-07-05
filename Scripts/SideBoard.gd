@@ -256,3 +256,53 @@ func close_dispenser():
 	active = true
 	get_parent().active = true
 	get_parent().active_scene.active = true
+
+
+func _on_red_button_pressed():
+	print(str(get_parent().red_matched))
+	get_parent().red_matched = get_parent().red_matched - 10
+	get_node("ColourContainer/RedButton").disabled = true
+
+
+func _on_orange_button_pressed():
+	print(str(get_parent().orange_matched))
+	get_parent().orange_matched = get_parent().orange_matched - 10
+	get_node("ColourContainer/OrangeButton").disabled = true
+
+
+func _on_yellow_button_pressed():
+	print(str(get_parent().yellow_matched))
+	get_parent().yellow_matched = get_parent().yellow_matched - 10
+	get_node("ColourContainer/YellowButton").disabled = true
+
+
+func _on_green_button_pressed():
+	print(str(get_parent().green_matched))
+	get_parent().green_matched = get_parent().green_matched - 10
+	get_node("ColourContainer/GreenButton").disabled = true
+
+
+func _on_blue_button_pressed():
+	print(str(get_parent().blue_matched))
+	get_parent().blue_matched = get_parent().blue_matched - 10
+	get_node("ColourContainer/BlueButton").disabled = true
+
+
+func _on_purple_button_pressed():
+	print(str(get_parent().purple_matched))
+	get_parent().purple_matched = get_parent().purple_matched - 10
+	get_node("ColourContainer/PurpleButton").disabled = true
+
+func update_buttons():
+	if (get_parent().red_matched > 10):
+		get_node("ColourContainer/RedButton").disabled = false
+	if (get_parent().orange_matched > 10):
+		get_node("ColourContainer/OrangeButton").disabled = false
+	if (get_parent().yellow_matched > 10):
+		get_node("ColourContainer/YellowButton").disabled = false
+	if (get_parent().green_matched > 10):
+		get_node("ColourContainer/GreenButton").disabled = false
+	if (get_parent().blue_matched > 10):
+		get_node("ColourContainer/BlueButton").disabled = false
+	if (get_parent().purple_matched > 10):
+		get_node("ColourContainer/PurpleButton").disabled = false
