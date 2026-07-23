@@ -3,7 +3,7 @@ extends Node2D
 
 signal game_finished(game_state)
 
-@export var turns_left: int
+@export var turns_left: float
 @export var diamonds: int = 0
 var active = true
 var max_turns: int
@@ -48,7 +48,7 @@ func setup_from_scratch():
 	grid.end_turn.connect(_on_grid_end_turn)
 	active_scene = grid
 	get_node("UI Container/Score_Label").text = "Score: " + str(score)
-	get_node("UI Container/Turns_Label").text = "Turns Left: " + str(turns_left)  + "/" + str(max_turns)
+	update_turn_counter()
 	get_node("UI Container/Goal_Label").text = "Goal: 0/" + str(goal)
 	get_node("UI Container/Diamonds_Label").text = "Shards: " + str(diamonds)
 	setup_deck()
@@ -92,7 +92,7 @@ func setup_from_file(save_lines):
 	levelSelect.position = Vector2(64, 80)
 	active_scene = levelSelect
 	get_node("UI Container/Score_Label").text = "Score: " + str(score)
-	get_node("UI Container/Turns_Label").text = "Turns Left: " + str(turns_left)  + "/" + str(max_turns)
+	update_turn_counter()
 	get_node("UI Container/Goal_Label").text = "Goal: 0/" + str(goal)
 	get_node("UI Container/Diamonds_Label").text = "Shards: " + str(diamonds)
 
@@ -176,12 +176,14 @@ func reset_score():
 
 func reduce_turns(num_turns):
 	turns_left -= num_turns
-	get_node("UI Container/Turns_Label").text = "Turns Left: " + str(turns_left)  + "/" + str(max_turns)
 
 func add_turns(num_turns):
 	turns_left += num_turns
-	get_node("UI Container/Turns_Label").text = "Turns Left: " + str(turns_left)  + "/" + str(max_turns)
 
+func update_turn_counter():
+	var format_string = "Turns Left: {0}/{1}"
+	get_node("UI Container/Turns_Label").text = format_string.format({0:"%2.1f" % turns_left, 1:"%2.1f" % max_turns})
+	#get_node("UI Container/Turns_Label").text = "Turns Left: " + str("2.1f" % turns_left)  + "/" + str(max_turns)
 
 func _on_side_board_card_activated(card: Card):
 	if (active_scene is Grid):
@@ -421,15 +423,15 @@ func recharge():
 	turns_left += 5
 	if (turns_left > max_turns):
 		turns_left = max_turns
-	get_node("UI Container/Turns_Label").text = "Turns Left: " + str(turns_left) + "/" + str(max_turns)
+	update_turn_counter()
 
 func set_num_turns(num_turns: int):
 	turns_left = num_turns
-	get_node("UI Container/Turns_Label").text = "Turns Left: " + str(turns_left) + "/" + str(max_turns)
+	update_turn_counter()
 
 func set_max_turns(turns: int):
 	max_turns = turns
-	get_node("UI Container/Turns_Label").text = "Turns Left: " + str(turns_left) + "/" + str(max_turns)
+	update_turn_counter()
 
 func increase_max_turns(turns: int):
 	set_max_turns(max_turns + turns)

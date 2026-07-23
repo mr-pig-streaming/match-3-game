@@ -643,6 +643,7 @@ func move_pieces(position1, position2, moved_by_helper = false):
 			countdown_viruses()
 			if (!moved_by_helper):
 				end_turn.emit(moved)
+				get_parent().update_turn_counter()
 	recolour_for_exclusion()
 
 func recheck_matches():
@@ -1224,19 +1225,32 @@ func _on_refill_timer_timeout():
 	temp_multiplier = 1.0
 	var base_score = round_matched * multiplier * 100
 	print("Base score = " + str(base_score))
-	for v in vertical_matched:
-		base_score *= get_parent().vertical_multiplier
-	for h in horizontal_matched:
-		base_score *= get_parent().horizontal_multiplier
-	for c in cross_matched:
-		base_score *= get_parent().cross_multiplier
-	for p in positive_diagonal_matched:
-		base_score *= get_parent().positive_diag_multiplier
-	for n in negative_diagonal_matched:
-		base_score *= get_parent().negative_diag_multiplier
+	var total_efficiency = 1.0
+	for v in vertical_matched - 2:
+		#base_score *= get_parent().vertical_multiplier
+		total_efficiency = total_efficiency * get_parent().vertical_multiplier
+	for h in horizontal_matched - 2:
+		#base_score *= get_parent().horizontal_multiplier
+		total_efficiency = total_efficiency * get_parent().horizontal_multiplier
+	for c in cross_matched - 2:
+		#base_score *= get_parent().cross_multiplier
+		total_efficiency = total_efficiency * get_parent().cross_multiplier
+	for p in positive_diagonal_matched - 2:
+		#base_score *= get_parent().positive_diag_multiplier
+		total_efficiency = total_efficiency * get_parent().positive_diag_multiplier
+	for n in negative_diagonal_matched - 2:
+		#base_score *= get_parent().negative_diag_multiplier
+		total_efficiency = total_efficiency * get_parent().negative_diag_multiplier
 	for x in diag_cross_matched:
-		base_score *= get_parent().cross_diag_multiplier
-	print("Multiplied score = " + str(base_score))
+		#base_score *= get_parent().cross_diag_multiplier
+		total_efficiency = total_efficiency * get_parent().cross_diag_multiplier
+	print("Efficieny multiplier = " + str(total_efficiency))
+	# Give some energy back depending on the efficiency multiplier
+	var bonus_energy = 1 - (1 / total_efficiency)
+	print("Bonus energy = " + str(bonus_energy))
+	print("Turns left = " + str(get_parent().turns_left))
+	get_parent().add_turns(bonus_energy)
+	get_parent().update_turn_counter()
 	if (round_matched >= 3):
 		get_parent().add_diamonds(round_matched - 3)
 		get_parent().add_score(base_score)
