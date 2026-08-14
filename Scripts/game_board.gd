@@ -191,6 +191,9 @@ func _on_side_board_card_activated(card: Card):
 		if (card.type != "DEBUFF"):
 			active_scene.recheck_matches()
 
+func reduce_effect_duration(interval: float):
+	get_node("SideBoard").reduce_chip_duration(interval)
+
 func _on_grid_end_turn(moved: bool):
 	# Update the sideboard to reduce the  durability of cards
 	print("Moved: " + str(moved))
@@ -281,6 +284,8 @@ func navigate(level, challenge_debuffs = ""):
 			grid.clear_board()
 			grid.setup_pieces()
 			grid.set_level(puzzle_level)
+			# Add the sample chips for testing. Remove before pushing
+			#add_sample_chips()
 		"Challenge":
 			print("Debuffs: " + challenge_debuffs)
 			puzzle_level += 1
@@ -298,6 +303,7 @@ func navigate(level, challenge_debuffs = ""):
 			grid.clear_board()
 			grid.setup_pieces()
 			grid.set_level(puzzle_level, true, challenge_debuffs)
+			#add_sample_chips()
 		"RewardScreen":
 			var reward: RewardScreen = preload("res://Scenes/reward_screen.tscn").instantiate()
 			add_child(reward)
@@ -328,96 +334,53 @@ func navigate(level, challenge_debuffs = ""):
 			rest.visible = true
 			transition_to(rest)
 
+func add_sample_chips():
+	get_node("SideBoard").microchips[0] = Microchip.new_microchip(10, "SHUFFLE", 0, false)
+	get_node("SideBoard").microchips[1] = Microchip.new_microchip(10, "MATCH_TYPE_DIAGONAL", 6, false)
+	get_node("SideBoard").connect_expired_signals()
+
 func set_grid_effects():
 	var active_cards = get_node("SideBoard").get_active_card_effects()
 	for card in active_cards:
 		print(card)
 		set_grid_effect(card)
+	var active_chips = get_node("SideBoard").get_active_chip_effects()
+	for chip in active_chips:
+		print(chip)
+		set_grid_effect(chip)
 
-func set_grid_effect(card_name: String):
-	print("Card name: " + card_name)
+func set_grid_effect(effect: String):
+	print("Effect: " + effect)
 	print(active_scene)
 	if (active_scene is Grid):
-		if (card_name == "Bishop"):
-			active_scene.add_effect("MATCH_TYPE_DIAGONAL")
-		if (card_name == "Tetris"):
-			active_scene.add_effect("MATCH_TYPE_TETRIS")
-		if (card_name == "Queen"):
-			active_scene.add_effect("MATCH_TYPE_QUEEN")
-		if (card_name == "Chaos"):
-			active_scene.add_effect("MATCH_TYPE_CHAOS")
-		if (card_name == "Double"):
-			active_scene.add_effect("MULTIPLIER_TYPE_2")
-		if (card_name == "Three's a\nCrowd"):
-			active_scene.add_effect("MATCH_TYPE_3")
-		if (card_name == "Time Stop"):
-			active_scene.add_effect("TIME_STOP")
-		if (card_name == "Half"):
-			active_scene.add_effect("HALF")
-		if (card_name == "Crack Blocks"):
+		# Instants need their own logic
+		if (effect == "CRACK_BLOCKS"):
 			active_scene.crack_all_blocks()
-			get_node("InstantExpiryTimer").start()
-		if (card_name == "Prism"):
+		elif (effect == "PRISM"):
 			active_scene.spawn_rainbow_blocks()
-			get_node("InstantExpiryTimer").start()
-		if (card_name == "Harden\nBlocks"):
+		elif (effect == "HARDEN_BLOCKS"):
 			active_scene.harden_all_blocks()
-			get_node("InstantExpiryTimer").start()
-		if (card_name == "Stone\nPrism"):
+		elif (effect == "STONE_PRISM"):
 			active_scene.spawn_hard_blocks()
-			get_node("InstantExpiryTimer").start()
-		if (card_name == "Colourblind"):
-			print("Activating colourblind")
-			active_scene.add_effect("COLOURBLIND")
-		if (card_name == "Quantum\nTranslocator"):
-			active_scene.add_effect("TRANSLOCATOR")
-		if (card_name == "Clear\nExclusions"):
+		elif (effect == "CLEAR_EXCLUSION"):
 			active_scene.remove_exclusion_zones()
-		if (card_name == "Exclusion\nZones"):
+		elif (effect == "SPAWN_EXCLUSION"):
 			active_scene.add_exclusion_zones()
-			get_node("InstantExpiryTimer").start()
-		if (card_name == "Shuffle"):
+		elif (effect == "SHUFFLE"):
 			active_scene.shuffle()
-			get_node("InstantExpiryTimer").start()
-		if (card_name == "Antivirus"):
+		elif (effect == "ANTIVIRUS"):
 			get_node("SideBoard").remove_all_debuffs()
-			get_node("InstantExpiryTimer").start()
-		if (card_name == "Discharge"):
+		elif (effect == "DISCHARGE"):
 			set_num_turns(turns_left - 5)
-			get_node("InstantExpiryTimer").start()
+		# Non-instants just get passed to the grid
+		else:
+			active_scene.add_effect(effect)
+		active_scene.recheck_matches()
 
-func remove_card_effect(card_name):
+func remove_card_effect(effect):
 	if (active_scene is Grid):
-		if (card_name == "Bishop"):
-			active_scene.remove_effect("MATCH_TYPE_DIAGONAL")
-		if (card_name == "Tetris"):
-			active_scene.remove_effect("MATCH_TYPE_TETRIS")
-		if (card_name == "Queen"):
-			active_scene.remove_effect("MATCH_TYPE_QUEEN")
-		if (card_name == "Chaos"):
-			active_scene.remove_effect("MATCH_TYPE_CHAOS")
-		if (card_name == "Double"):
-			active_scene.remove_effect("MULTIPLIER_TYPE_2")
-		if (card_name == "Three's a\nCrowd"):
-			active_scene.remove_effect("MATCH_TYPE_3")
-		if (card_name == "Time Stop"):
-			active_scene.remove_effect("TIME_STOP")
-			active_scene.recheck_matches()
-		if (card_name == "Half"):
-			active_scene.remove_effect("HALF")
-		if (card_name == "Crack Blocks"):
-			pass #This is an instant, nothing to do
-		if (card_name == "Harden\nBlocks"):
-			pass #This is an instant, nothing to do
-		if (card_name == "Stone\nPrism"):
-			pass #This is an instant, nothing to do
-		if (card_name == "Colourblind"):
-			active_scene.remove_effect("COLOURBLIND")
-			active_scene.correct_colours()
-		if (card_name == "Quantum\nTranslocator"):
-			active_scene.remove_effect("TRANSLOCATOR")
-		if (card_name == "Exclusion\nZones"):
-			pass #This is an instant, nothing to do
+		active_scene.remove_effect(effect)
+		
 
 func recharge():
 	turns_left += 5

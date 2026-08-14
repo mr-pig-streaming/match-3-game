@@ -643,6 +643,8 @@ func move_pieces(position1, position2, moved_by_helper = false):
 			countdown_viruses()
 			if (!moved_by_helper):
 				end_turn.emit(moved)
+				print("Reducing energy by 1")
+				get_parent().reduce_effect_duration(1)
 				get_parent().update_turn_counter()
 	recolour_for_exclusion()
 
@@ -1246,11 +1248,15 @@ func _on_refill_timer_timeout():
 		total_efficiency = total_efficiency * get_parent().cross_diag_multiplier
 	print("Efficieny multiplier = " + str(total_efficiency))
 	# Give some energy back depending on the efficiency multiplier
-	var bonus_energy = 1 - (1 / total_efficiency)
+	var bonus_energy = 0
+	if total_efficiency >= 1:
+		bonus_energy = 1 - (1 / total_efficiency)
 	print("Bonus energy = " + str(bonus_energy))
 	print("Turns left = " + str(get_parent().turns_left))
 	get_parent().add_turns(bonus_energy)
 	get_parent().update_turn_counter()
+	print("Reducing energy by " + str((1 - bonus_energy)))
+	get_parent().reduce_effect_duration(1 - bonus_energy)
 	if (round_matched >= 3):
 		get_parent().add_diamonds(round_matched - 3)
 		get_parent().add_score(base_score)
