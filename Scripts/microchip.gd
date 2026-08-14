@@ -7,19 +7,24 @@ var base_duration: float = 0.0
 var duration: float = 0.0
 var active: bool = false
 
-static func new_microchip(_cost: int, _effect: String, _duration: float, _base_duration: float, _active: bool):
+signal expired(effect)
+
+static func new_microchip(_cost: int, _effect: String, _duration: float, _active: bool):
 	var chip = load("res://Scenes/microchip.tscn").instantiate()
 	chip.cost = _cost
 	chip.effect = _effect
 	chip.duration = _duration
-	chip.base_duration = _base_duration
+	chip.base_duration = _duration
 	chip.active = _active
 	return chip
 
 func reduce_duration(interval: float):
-	duration = duration - interval
-	if duration <= 0:
-		active = false
+	if active:
+		print("Current duration of " + effect + " = " + str(duration))
+		duration = duration - interval
+		if duration <= 0:
+			expired.emit(effect)
+			active = false
 
 func activate(energy: int):
 	if energy >= cost:
