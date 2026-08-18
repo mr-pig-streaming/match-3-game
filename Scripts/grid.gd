@@ -44,6 +44,18 @@ var match_type
 
 enum MATCH_TYPE {STANDARD, DIAGONAL, QUEEN, TETRIS}
 
+# The two standard matches
+var STANDARD_VERTICAL = [Vector2(0, 0), Vector2(0, 1), Vector2(0, 2)]
+var STANDARD_HORIZONTAL = [Vector2(0, 0), Vector2(1, 0), Vector2(2, 0)]
+
+var standard_pieces = [STANDARD_VERTICAL, STANDARD_HORIZONTAL]
+
+# The two diagonal matches
+var DIAGONAL_POSITIVE = [Vector2(0, 0), Vector2(1, 1), Vector2(2, 2)]
+var DIAGONAL_NEGATIVE = [Vector2(0, 0), Vector2(1, -1), Vector2(2, -2)]
+
+var diagonal_pieces = [DIAGONAL_POSITIVE, DIAGONAL_NEGATIVE]
+
 # Every Tetris piece, in each orientation
 var TETRIS_O = [Vector2(0, 0), Vector2(0, 1), Vector2(1, 0), Vector2(1, 1)]
 var TETRIS_T_0 = [Vector2(0, 0), Vector2(-1 ,0), Vector2(1, 0), Vector2(0, 1)]
@@ -472,8 +484,8 @@ func match_at(x, y, colour):
 	if (colour == "Stone" || colour == "Virus" || colour == "XStone" || colour == "XVirus"):
 		return false
 	# If we've already marked this as matched for any reason, then return true
-	if (all_pieces[x][y].matched):
-		return true
+	#if (all_pieces[x][y].matched):
+	#	return true
 	if (match_type == MATCH_TYPE.STANDARD):
 		return standard_match(x, y, colour)
 	elif (match_type == MATCH_TYPE.DIAGONAL):
@@ -484,73 +496,29 @@ func match_at(x, y, colour):
 		return tetris_match(x, y, colour)
 
 func diagonal_match(x, y, colour):
-	if (colour == null):
-		return false
-	# 6 possibilites for a match
-	# bottom in a positive diagonal
-	if (x < width - 2 && y < height - 2 && all_pieces[x + 1][y + 1].matches(colour) && all_pieces[x + 2][y + 2].matches(colour) && all_pieces[x + 1][y + 1].matches(all_pieces[x + 2][y + 2].colour)):
-		return true
-	# non-glass middle in a positive diagonal
-	if (x < width - 1 && x >= 1 && y < height - 1 && y >= 1 && all_pieces[x - 1][y - 1].matches(colour) && all_pieces[x + 1][y + 1].matches(colour) && all_pieces[x - 1][y - 1].matches(all_pieces[x + 1][y + 1].colour)):
-		return true
-	# top in a positive diagonal
-	if (x >= 2 && y >= 2 && all_pieces[x - 1][y - 1].matches(colour) && all_pieces[x - 2][y - 2].matches(colour) && all_pieces[x - 2][y - 2].matches(all_pieces[x - 1][y - 1].colour)):
-		return true
-	# bottom in a negative diagonal
-	if (x >= 2 && y < height - 2 && all_pieces[x - 1][y + 1].matches(colour) && all_pieces[x - 2][y + 2].matches(colour) && all_pieces[x - 2][y + 2].matches(all_pieces[x - 1][y + 1].colour)):
-		return true
-	# non-glass middle in a negative diagonal
-	if (x < width - 1 && x >= 1 && y < height - 1 && y >= 1 && all_pieces[x - 1][y + 1].matches(colour) && all_pieces[x + 1][y - 1].matches(colour) && all_pieces[x - 1][y + 1].matches(all_pieces[x + 1][y - 1].colour)):
-		return true
-	# top in a negative diagonal
-	if (x < width - 2 && y >= 2 && all_pieces[x + 1][y - 1].matches(colour) && all_pieces[x + 2][y - 2].matches(colour) && all_pieces[x + 1][y - 1].matches(all_pieces[x + 2][y - 2].colour)):
-		return true
-	return false
+	return shape_match(x, y, colour, diagonal_pieces)
 
 func standard_match(x, y, colour):
-	return horizontal_match(x, y, colour) || vertical_match(x, y, colour)
-
-func horizontal_match(x, y, colour):
-	if (colour == null):
-		return false
-	# left block in a horizontal
-	if (x < width - 2 && all_pieces[x + 1][y].matches(colour) && all_pieces[x + 2][y].matches(colour) && all_pieces[x + 1][y].matches(all_pieces[x + 2][y].colour)):
-		return true
-	# non-glass middle block in a horizontal
-	if (x < width - 1 && x >= 1 && all_pieces[x - 1][y].matches(colour) && all_pieces[x + 1][y].matches(colour) && all_pieces[x - 1][y].matches(all_pieces[x + 1][y].colour)):
-		return true
-	# right block in a horizontal
-	if (x >= 2 && all_pieces[x - 1][y].matches(colour) && all_pieces[x - 2][y].matches(colour) && all_pieces[x - 1][y].matches(all_pieces[x - 2][y].colour)):
-		return true
-	return false
-
-func vertical_match(x, y, colour):
-	if (colour == null):
-		return false
-	# bottom block in a vertical
-	if (y < height - 2 && all_pieces[x][y + 1].matches(colour) && all_pieces[x][y + 2].matches(colour) && all_pieces[x][y + 1].matches(all_pieces[x][y + 2].colour)):
-		return true
-	# non-glass middle block in a vertical
-	if (y < height - 1 && y >= 1 && all_pieces[x][y - 1].matches(colour) && all_pieces[x][y + 1].matches(colour) && all_pieces[x][y - 1].matches(all_pieces[x][y + 1].colour)):
-		return true
-	# top block in a vertical
-	if (y >= 2 && all_pieces[x][y - 1].matches(colour) && all_pieces[x][y - 2].matches(colour) && all_pieces[x][y - 2].matches(all_pieces[x][y - 1].colour)):
-		return true
-	return false
+	return shape_match(x, y, colour, standard_pieces)
 
 func tetris_match(x, y, colour):
+	return shape_match(x, y, colour, tetris_pieces, true)
+
+func shape_match(x, y, colour, shapes, strict = false):
 	# For each shape, shift it to the x & y...
-	for shape in tetris_pieces:
+	for shape in shapes:
 		var shifted_shape = []
 		for square in shape:
 			shifted_shape.append(Vector2(square.x + x, square.y + y))
 		# If any square is outside the grid, this position is invalid so don't check it
 		if contains_invalid(shifted_shape):
 			continue
-		# Make sure all if the squares are the same colour
+		# Make sure all of the squares are the same colour
 		var colours_match = true
 		for square in shifted_shape:
-			if (!all_pieces[square.x][square.y].matches(colour) || all_pieces[square.x][square.y].matched):
+			if (!all_pieces[square.x][square.y].matches(colour)):
+				colours_match = false
+			if (strict && all_pieces[square.x][square.y].matched):
 				colours_match = false
 		if (colours_match == false):
 			# This shape has at least one non-match
@@ -714,15 +682,8 @@ func check_for_matches():
 			if (all_pieces[i][j].colour != "null" && match_at(i, j, all_pieces[i][j].colour)):
 				all_pieces[i][j].matched = true
 				matches_found = true
-				# If this colour isn't debuffed, add to the match count
-				if (all_pieces[i][j].colour == "energy"):
-					energy_matched += 1
-				elif (!debuff_colours.has(all_pieces[i][j].colour)):
-					round_matched += 1
-					colour_count(all_pieces[i][j])
-			# If we are working with max 3, then return immediately if we have 3 matches
-			if (debuff_effects.has("MATCH_TYPE_3") && round_matched >= 3):
-				return matches_found
+	count_matches()
+	print("Round matched: " + str(round_matched))
 	return matches_found
 
 func in_grid(position: Vector2):
@@ -820,26 +781,25 @@ func collapse_columns():
 		refill_timer.start()
 
 func remove_refill_matches():
-	var refill_pieces = possible_pieces
-	if (active_effects.has("COLOURBLIND")):
-		refill_pieces = colourblind_pieces
-	var k = randi_range(0, refill_pieces.size() - 1)
+	var total_weights = 0.0
+	for p in possible_pieces:
+		total_weights += possible_pieces[p]
 	for square: Vector2 in squares_to_drop:
 		var i = square.x
 		var j = square.y
 		if (all_pieces[i][j].matched):
 			print("Refill match at " + str(i) + ", " + str(j))
-			var piece: Piece = refill_pieces[k].instantiate()
+			var piece: Piece = random_piece(total_weights)
+			while (active_effects.has("COLOURBLIND") && piece.colour == "green"):
+				piece = random_piece(total_weights)
 			while (all_pieces[i][j].colour == piece.colour):
 				print("Colours match, trying another")
-				k = (k + 1) % (refill_pieces.size())
-				piece = refill_pieces[k].instantiate()
+				piece = random_piece(total_weights)
 			all_pieces[i][j].queue_free()
 			all_pieces[i][j] = piece
 			all_pieces[i][j].matched = false
 			add_child(piece)
 			move_child(piece, 0)
-			k = (k + 1) % (refill_pieces.size())
 
 func drop_refill_pieces():
 	var k = 0
@@ -905,6 +865,8 @@ func count_matches():
 	for i in width:
 		for j in height:
 			if (all_pieces[i][j].matched):
+				if (all_pieces[i][j].colour == "energy"):
+					energy_matched += 1
 				round_matched += 1
 				colour_count(all_pieces[i][j])
 	cross_matched += count_corners()
