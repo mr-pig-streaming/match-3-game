@@ -1,19 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://c4stihbs5cu5j"]
+[gd_scene load_steps=6 format=3 uid="uid://c4stihbs5cu5j"]
 
 [ext_resource type="Script" path="res://Scripts/black_market.gd" id="1_jo4he"]
 [ext_resource type="Texture2D" uid="uid://b0lx2nq5yry12" path="res://Art/black_market.png" id="2_p3o83"]
-[ext_resource type="Texture2D" uid="uid://br4s6nivnqidg" path="res://Art/chip_trader.png" id="2_ta0ay"]
 [ext_resource type="Texture2D" uid="uid://dwpxtwqq5fu0j" path="res://Art/battery.png" id="3_ca81v"]
 [ext_resource type="Texture2D" uid="uid://b0r0c10dnqj88" path="res://Art/hacker.png" id="4_jl787"]
 [ext_resource type="Texture2D" uid="uid://di0tatstckvoe" path="res://Art/smuggler.png" id="5_o1nro"]
 
 [node name="BlackMarket" type="Node2D"]
 script = ExtResource("1_jo4he")
-
-[node name="ChipTraderSprite" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(640, 360)
-texture = ExtResource("2_ta0ay")
 
 [node name="BatterySprite" type="Sprite2D" parent="."]
 visible = false
@@ -70,13 +64,6 @@ offset_right = 486.0
 offset_bottom = 251.0
 text = "Hacker"
 
-[node name="ChipTraderButton" type="Button" parent="."]
-offset_left = 271.0
-offset_top = 597.0
-offset_right = 370.0
-offset_bottom = 628.0
-text = "Chip Trader"
-
 [node name="SmugglerButton" type="Button" parent="."]
 offset_left = 87.0
 offset_top = 204.0
@@ -94,6 +81,5 @@ text = "Guidebook"
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="BatteryButton" to="." method="_on_battery_button_pressed"]
 [connection signal="pressed" from="HackerButton" to="." method="_on_hacker_button_pressed"]
-[connection signal="pressed" from="ChipTraderButton" to="." method="_on_chip_trader_button_pressed"]
 [connection signal="pressed" from="SmugglerButton" to="." method="_on_smuggler_button_pressed"]
 [connection signal="pressed" from="GuidebookButton" to="." method="_on_guidebook_button_pressed"]

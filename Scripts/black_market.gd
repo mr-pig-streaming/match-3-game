@@ -72,19 +72,6 @@ func create_hacker_buttons():
 		unlock_button.disabled = true
 	upgrade_buttons.append(unlock_button)
 	var y_pos = 225
-	for i in range(4):
-		var slot = get_parent().get_node("Globals").slot_upgrades[i]
-		var slot_button = Button.new()
-		slot_button.text = str(slot[1]) + ": " + slot[0]
-		slot_button.name = "HackerButton" + str(i)
-		slot_button.position = Vector2(1000, y_pos)
-		y_pos += 75
-		add_child(slot_button)
-		slot_button.pressed.connect(buy_slot.bind(slot[0], slot[1], i))
-		upgrade_buttons.append(slot_button)
-		# If it isn't available yet, or if it has already been bought, disable it
-		if (slot[2] == false || slot[3] == true):
-			slot_button.disabled = true
 	var helper_button = Button.new()
 	helper_button.text = "10: Unlock a special helper\nfor the next round"
 	helper_button.name = "HelperButton"
@@ -149,37 +136,10 @@ func recreate_battery_buttons():
 	create_battery_buttons()
 	get_parent().save_state = "BLACK_MARKET\n" + black_market_to_json()
 
-func create_chip_buttons():
-	var y_pos = 150
-	for i in range(4):
-		var card = get_parent().get_node("Globals").card_upgrades[i]
-		var card_button = Button.new()
-		card_button.text = str(card[1]) + ": " + card[0].replace("Chip: ", "Chip:\n")
-		card_button.name = "ChipButton" + str(i)
-		card_button.position = Vector2(1000, y_pos)
-		y_pos += 75
-		add_child(card_button)
-		card_button.pressed.connect(buy_card.bind(card[0], card[1], i))
-		upgrade_buttons.append(card_button)
-		# If it isn't available yet, or if it has already been bought, disable it
-		if (card[2] == false || card[3] == true):
-			card_button.disabled = true
-
-func clear_chip_buttons():
-	for b in upgrade_buttons:
-		if (b != null):
-			b.queue_free()
-	upgrade_buttons.clear()
-
-func recreate_chip_buttons():
-	clear_chip_buttons()
-	create_chip_buttons()
-	get_parent().save_state = "BLACK_MARKET\n" + black_market_to_json()
-
 func create_smuggler_buttons():
 	var half_shards = num_diamonds / 2
 	var smuggle_button = Button.new()
-	smuggle_button.text = "Smuggle remaining chips\nI keep " + str(num_diamonds - half_shards) + ", you'll start with " + str(half_shards)
+	smuggle_button.text = "Smuggle remaining shards\nI keep " + str(num_diamonds - half_shards) + ", you'll start with " + str(half_shards)
 	smuggle_button.position = Vector2(1000, 150)
 	add_child(smuggle_button)
 	smuggle_button.pressed.connect(smuggle_shards)
@@ -194,37 +154,6 @@ func recreate_smuggler_buttons():
 	clear_smuggler_buttons()
 	create_smuggler_buttons()
 	get_parent().save_state = "BLACK_MARKET\n" + black_market_to_json()
-
-func buy_card(upgrade_name, upgrade_cost, upgrade_index):
-	if (!active):
-		return
-	if (num_diamonds >= upgrade_cost):
-		set_num_diamonds(num_diamonds - upgrade_cost)
-		get_parent().get_node("Globals").card_upgrades[upgrade_index][3] = true
-		if (upgrade_index < 3):
-			get_parent().get_node("Globals").card_upgrades[upgrade_index + 1][2] = true
-		# TO DO: Clean this up to reduce duplication
-		match upgrade_name:
-			"Starting Chip: Shuffle":
-				get_parent().get_node("Globals").starting_deck.append(["Shuffle", 0, 2])
-			"Starting Chip: Bishop":
-				get_parent().get_node("Globals").starting_deck.append(["Bishop", 3, 3])
-			"Starting Chip: Antivirus":
-				get_parent().get_node("Globals").starting_deck.append(["Antivirus", 0, 4])
-			"Starting Chip: Crack Blocks":
-				get_parent().get_node("Globals").starting_deck.append(["Crack Blocks", 0, 5])
-		recreate_chip_buttons()
-
-func buy_slot(upgrade_name, upgrade_cost, upgrade_index):
-	if (!active):
-		return
-	if (num_diamonds >= upgrade_cost):
-		set_num_diamonds(num_diamonds - upgrade_cost)
-		get_parent().get_node("Globals").slot_upgrades[upgrade_index][3] = true
-		if (upgrade_index < 3):
-			get_parent().get_node("Globals").slot_upgrades[upgrade_index + 1][2] = true
-		get_parent().get_node("Globals").num_card_slots += 1
-		recreate_hacker_buttons()
 
 func buy_battery(upgrade_name, upgrade_cost, upgrade_index):
 	if (!active):
@@ -285,8 +214,6 @@ func _on_hacker_button_pressed():
 	get_node("HackerButton").disabled = true
 	get_node("BatteryButton").visible = false
 	get_node("BatteryButton").disabled = true
-	get_node("ChipTraderButton").visible = false
-	get_node("ChipTraderButton").disabled = true
 	get_node("SmugglerButton").visible = false
 	get_node("SmugglerButton").disabled = true
 	get_node("NewRunButton").visible = false
@@ -304,33 +231,12 @@ func _on_battery_button_pressed():
 	get_node("HackerButton").disabled = true
 	get_node("BatteryButton").visible = false
 	get_node("BatteryButton").disabled = true
-	get_node("ChipTraderButton").visible = false
-	get_node("ChipTraderButton").disabled = true
 	get_node("SmugglerButton").visible = false
 	get_node("SmugglerButton").disabled = true
 	get_node("NewRunButton").visible = false
 	get_node("NewRunButton").disabled = true
 	get_node("MarketBackground").visible = false
 	create_battery_buttons()
-	pass # Replace with function body.
-
-
-func _on_chip_trader_button_pressed():
-	if (!active):
-		return
-	get_node("ChipTraderSprite").visible = true
-	get_node("HackerButton").visible = false
-	get_node("HackerButton").disabled = true
-	get_node("BatteryButton").visible = false
-	get_node("BatteryButton").disabled = true
-	get_node("ChipTraderButton").visible = false
-	get_node("ChipTraderButton").disabled = true
-	get_node("SmugglerButton").visible = false
-	get_node("SmugglerButton").disabled = true
-	get_node("NewRunButton").visible = false
-	get_node("NewRunButton").disabled = true
-	create_chip_buttons()
-	get_node("MarketBackground").visible = false
 	pass # Replace with function body.
 
 
@@ -342,18 +248,14 @@ func _on_back_button_pressed():
 	get_node("HackerButton").disabled = false
 	get_node("BatteryButton").visible = true
 	get_node("BatteryButton").disabled = false
-	get_node("ChipTraderButton").visible = true
-	get_node("ChipTraderButton").disabled = false
 	get_node("SmugglerButton").visible = true
 	get_node("SmugglerButton").disabled = false
 	get_node("NewRunButton").visible = true
 	get_node("NewRunButton").disabled = false
 	get_node("HackerSprite").visible = false
 	get_node("BatterySprite").visible = false
-	get_node("ChipTraderSprite").visible = false
 	get_node("SmugglerSprite").visible = false
 	clear_battery_buttons()
-	clear_chip_buttons()
 	clear_hacker_buttons()
 	clear_smuggler_buttons()
 	pass # Replace with function body.
@@ -367,8 +269,6 @@ func _on_smuggler_button_pressed():
 	get_node("HackerButton").disabled = true
 	get_node("BatteryButton").visible = false
 	get_node("BatteryButton").disabled = true
-	get_node("ChipTraderButton").visible = false
-	get_node("ChipTraderButton").disabled = true
 	get_node("SmugglerButton").visible = false
 	get_node("SmugglerButton").disabled = true
 	get_node("NewRunButton").visible = false

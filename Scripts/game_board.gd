@@ -51,7 +51,6 @@ func setup_from_scratch():
 	update_turn_counter()
 	get_node("UI Container/Goal_Label").text = "Goal: 0/" + str(goal)
 	get_node("UI Container/Diamonds_Label").text = "Shards: " + str(diamonds)
-	setup_deck()
 
 # Creates the game board from the appropriate lines of the save file
 # Only the necessary lines should be passed, in an array of strings
@@ -62,9 +61,6 @@ func setup_from_file(save_lines):
 	var json = JSON.new()
 	json.parse(save_lines[2])
 	var _deck = json.data
-	for d in _deck:
-		var card = Card.card_from_string(d)
-		deck.append(card)
 	# Setup the basics of the game board
 	var stats = save_lines[3].split(",")
 	turns_left = int(stats[0])
@@ -95,13 +91,6 @@ func setup_from_file(save_lines):
 	update_turn_counter()
 	get_node("UI Container/Goal_Label").text = "Goal: 0/" + str(goal)
 	get_node("UI Container/Diamonds_Label").text = "Shards: " + str(diamonds)
-
-func setup_deck():
-	var base_deck = get_parent().get_node("Globals").starting_deck
-	var num_cards = base_deck.size()
-	for i in num_cards:
-		var card = Card.new_card(base_deck[i][0], base_deck[i][1], base_deck[i][2], base_deck[i][3])
-		deck.append(card)
 
 func update_check_type():
 	pass
@@ -185,12 +174,6 @@ func update_turn_counter():
 	get_node("UI Container/Turns_Label").text = format_string.format({0:"%2.1f" % turns_left, 1:"%2.1f" % max_turns})
 	#get_node("UI Container/Turns_Label").text = "Turns Left: " + str("2.1f" % turns_left)  + "/" + str(max_turns)
 
-func _on_side_board_card_activated(card: Card):
-	if (active_scene is Grid):
-		set_grid_effect(card.card_name)
-		if (card.type != "DEBUFF"):
-			active_scene.recheck_matches()
-
 func reduce_effect_duration(interval: float):
 	get_node("SideBoard").reduce_chip_duration(interval)
 
@@ -198,7 +181,7 @@ func _on_grid_end_turn(moved: bool):
 	# Update the sideboard to reduce the  durability of cards
 	print("Moved: " + str(moved))
 	if (moved):
-		get_node("SideBoard").reduce_card_durability()
+		# We need to reduce to diraction of active microchips
 		set_grid_effects()
 	if (moved):
 		if (get_node("Grid").round_matched >= 5):
@@ -224,19 +207,6 @@ func remove_combo_sprite():
 	combo_tween.tween_property(get_node("GreatSprite"), "scale", Vector2(0.0, 0.0), 0.5).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 	combo_tween.play()
 
-# Draw a random card from the deck
-func random_card():
-	print("Deck: ")
-	print(deck)
-	if (deck.size() <= 0):
-		return null
-	if (diamonds <= 0):
-		return null
-	spend_diamonds(1)
-	var index = randi_range(0, deck.size() - 1)
-	var card = deck[index]
-	deck.remove_at(index)
-	return card
 
 func transition_to(target_scene):
 	print("Transitioning to " + str(target_scene))
@@ -340,10 +310,6 @@ func add_sample_chips():
 	get_node("SideBoard").connect_expired_signals()
 
 func set_grid_effects():
-	var active_cards = get_node("SideBoard").get_active_card_effects()
-	for card in active_cards:
-		print(card)
-		set_grid_effect(card)
 	var active_chips = get_node("SideBoard").get_active_chip_effects()
 	for chip in active_chips:
 		print(chip)
@@ -425,18 +391,14 @@ func shop(shop_item: ShopItem):
 	if (shop_item.item_name == "Improve X Efficiency"):
 		cross_diag_multiplier += 0.5
 		get_node("SideBoard/EfficiencyTracker/EfficiencyX").text = "X: %.1f" % cross_diag_multiplier
-	if (shop_item.card != null):
-		deck.append(Card.card_from_string(shop_item.card._to_string()))
-
-func add_reward(card: Card):
-	deck.append(Card.card_from_string(card._to_string()))
 
 func _on_instant_expiry_timer_timeout():
 	get_node("SideBoard").deactivate_cards()
 
-func activate_debuff():
-	var debuff: Card = get_parent().get_node("Globals").get_random_debuff()
-	get_node("SideBoard").activate_debuff(debuff)
+#func activate_debuff():
+	#var debuff: Card = get_parent().get_node("Globals").get_random_debuff()
+	# Rework this since cards have been removed
+	# get_node("SideBoard").activate_debuff(debuff)
 
 func gameboard_to_json():
 	var json_string = JSON.stringify(deck) + "\n"
@@ -448,9 +410,6 @@ func gameboard_to_json():
 func _input(event):
 	if (!active):
 		return
-	if Input.is_key_pressed(KEY_D):
-		print("Activating Virus")
-		activate_debuff()
 	if Input.is_key_pressed(KEY_A):
 		print("Activating Test Achievement")
 		get_node("/root/BaseScene/AchievementManager").unlock_achievement("Test")

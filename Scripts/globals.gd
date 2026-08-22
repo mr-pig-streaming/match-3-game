@@ -43,14 +43,7 @@ var battery_upgrades = [
 	["Megavolt Cell", 90, false, false]
 ]
 
-var card_upgrades= [
-	["Starting Chip: Shuffle", 10, false, false],
-	["Starting Chip: Bishop", 20, false, false],
-	["Starting Chip: Antivirus", 30, false, false],
-	["Starting Chip: Crack Blocks", 40, false, false],
-]
-
-var sideboard_unlocked = false
+var sideboard_unlocked = true
 
 var radar_unlocked = false
 
@@ -96,9 +89,6 @@ func get_shop_cards(num_cards: int):
 		return possible_perks.slice(0, num_cards)
 	return possible_perks
 
-func get_random_debuff():
-	var debuff = debuffs.pick_random()
-	return Card.new_card(debuff[0], debuff[1], debuff[2], debuff[3], "DEBUFF")
 
 func add_random_card_to_start():
 	var card = all_perks.pick_random()
@@ -109,7 +99,8 @@ func globals_to_json():
 	json_string += str(max_turns) + "," + str(num_card_slots) + "\n"
 	json_string += JSON.stringify(slot_upgrades) + "\n"
 	json_string += JSON.stringify(battery_upgrades) + "\n"
-	json_string += JSON.stringify(card_upgrades) + "\n"
+	# This line will be replaced with chip information
+	json_string += "\n"
 	json_string += str(sideboard_unlocked) + "\n"
 	json_string += str(radar_unlocked)
 	return json_string
@@ -119,9 +110,6 @@ func json_to_globals(save_lines):
 	var json = JSON.new()
 	json.parse(save_lines[0])
 	var deck = json.data
-	for card in deck:
-		var card_parts = card#.split(",")
-		starting_deck.append([card_parts[0], int(card_parts[1]), int(card_parts[2])])
 	var line2 = save_lines[1].split(",")
 	max_turns = int(line2[0])
 	num_card_slots = int(line2[1])
@@ -141,11 +129,6 @@ func json_to_globals(save_lines):
 		battery_upgrades.append([battery_parts[0], int(battery_parts[1]), bool(battery_parts[2]), bool(battery_parts[3])])
 	json = JSON.new()
 	json.parse(save_lines[4])
-	card_upgrades = []
-	var cards = json.data
-	for card in cards:
-		var card_parts = card#.split(",")
-		card_upgrades.append([card_parts[0], int(card_parts[1]), bool(card_parts[2]), bool(card_parts[3])])
 	if (save_lines[5] == "true"):
 		sideboard_unlocked = true
 	else:
