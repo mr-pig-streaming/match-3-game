@@ -17,20 +17,6 @@ position = Vector2(640, 0)
 position = Vector2(80, 360)
 shape = SubResource("RectangleShape2D_g77gm")
 
-[node name="DispenserButton" type="Button" parent="."]
-offset_left = 984.0
-offset_top = 18.0
-offset_right = 1102.0
-offset_bottom = 49.0
-text = "Dispense Chip"
-
-[node name="ViewButton" type="Button" parent="."]
-offset_left = 1142.0
-offset_top = 18.0
-offset_right = 1234.0
-offset_bottom = 49.0
-text = "View Chips"
-
 [node name="EfficienyLabel" type="RichTextLabel" parent="."]
 offset_left = 828.0
 offset_top = 501.0
@@ -141,8 +127,6 @@ texture = ExtResource("2_ao2gv")
 [connection signal="input_event" from="ChipArea" to="." method="_on_area_2d_input_event"]
 [connection signal="mouse_entered" from="ChipArea" to="." method="_on_chip_area_mouse_entered"]
 [connection signal="mouse_exited" from="ChipArea" to="." method="_on_chip_area_mouse_exited"]
-[connection signal="pressed" from="DispenserButton" to="." method="_on_dispenser_button_pressed"]
-[connection signal="pressed" from="ViewButton" to="." method="_on_view_button_pressed"]
 [connection signal="pressed" from="ColourContainer/RedButton" to="." method="_on_red_button_pressed"]
 [connection signal="pressed" from="ColourContainer/OrangeButton" to="." method="_on_orange_button_pressed"]
 [connection signal="pressed" from="ColourContainer/YellowButton" to="." method="_on_yellow_button_pressed"]
