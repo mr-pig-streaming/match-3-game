@@ -1266,9 +1266,10 @@ func count_challenge_blocks():
 	return num_blocks
 
 func activate_debuffs():
-	for i in num_debuffs:
-		print("Activating debuff")
-		get_parent().activate_debuff()
+	#for i in num_debuffs:
+	#	print("Activating debuff")
+	#	get_parent().activate_debuff()
+	pass
 
 func crack_all_blocks():
 	active = false

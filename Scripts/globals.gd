@@ -29,6 +29,19 @@ var all_perks = [["Bishop", 3, 3, "Updates match mode to Diagonal. Duration: 3 T
 				 ["Antivirus", 0, 4, "Removes all active viruses"]
 				 ]
 
+var all_chip_effects = ["MATCH_TYPE_DIAGONAL",
+						"MATCH_TYPE_TETRIS",
+						"MULTIPLIER_TYPE_2",
+						"MATCH_TYPE_QUEEN",
+						"TIME_STOP", 
+						"CRACK_BLOCKS",
+						"PRISM",
+						"COLOURBLIND",
+						"ANTIVIRUS",
+						"QUANTUM_TRANSLOCATOR",
+						"SHUFFLE",
+						"CLEAR_EXCLUSION"]
+
 var slot_upgrades = [
 	["Unlock Slot 2", 20, false, false],
 	["Unlock Slot 3", 30, false, false],
@@ -43,7 +56,7 @@ var battery_upgrades = [
 	["Megavolt Cell", 90, false, false]
 ]
 
-var sideboard_unlocked = true
+var sideboard_unlocked = false
 
 var radar_unlocked = false
 
@@ -137,3 +150,6 @@ func json_to_globals(save_lines):
 		radar_unlocked = true
 	else:
 		radar_unlocked = false
+
+func get_random_chip_effect():
+	return all_chip_effects.pick_random()

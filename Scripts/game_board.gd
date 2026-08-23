@@ -26,8 +26,8 @@ var green_matched = 0
 var blue_matched = 0
 var purple_matched = 0
 
-# All the cards/chips 
-var deck = []
+# All the chip fragemtns
+var chip_fragments = []
 # The currently active scene. Used for scene transitions
 var active_scene
 var levelSelect: LevelSelect = null
@@ -401,7 +401,7 @@ func _on_instant_expiry_timer_timeout():
 	# get_node("SideBoard").activate_debuff(debuff)
 
 func gameboard_to_json():
-	var json_string = JSON.stringify(deck) + "\n"
+	var json_string = "\n"
 	json_string += str(turns_left) + "," + str(max_turns) + "," + str(diamonds) + "," + str(score) + "," + str(goal) + "," + str(goal_score) + "," + str(puzzle_level) + ","
 	json_string += str(horizontal_multiplier) + "," + str(vertical_multiplier) + "," + str(cross_multiplier) + "," + str(positive_diag_multiplier) + "," + str(negative_diag_multiplier) + "," + str(cross_diag_multiplier) + "\n"
 	json_string += str(get_node("LevelSelect"))
@@ -468,3 +468,6 @@ func close_guidebook():
 	active_scene.active = true
 	active = true
 	get_node("Guidebook").queue_free()
+
+func add_fragment(type: String, value: String):
+	chip_fragments.append([type, value])
