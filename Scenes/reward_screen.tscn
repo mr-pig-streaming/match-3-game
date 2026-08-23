@@ -21,12 +21,4 @@ offset_right = 294.0
 offset_bottom = 309.0
 text = "Take It!"
 
-[node name="LeaveItButton" type="Button" parent="."]
-offset_left = 102.0
-offset_top = 277.0
-offset_right = 184.0
-offset_bottom = 308.0
-text = "Leave It..."
-
 [connection signal="pressed" from="TakeItButton" to="." method="_on_take_it_button_pressed"]
-[connection signal="pressed" from="LeaveItButton" to="." method="_on_leave_it_button_pressed"]
